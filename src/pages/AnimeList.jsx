@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useSearch } from "@tanstack/react-router";
 import { AnimatePresence } from "framer-motion";
 import CardAnime from "../components/anime/CardAnime";
@@ -8,11 +9,17 @@ export default function AnimeList() {
   const { query } = useSearch({ from: "/anime" });
   const { data: animes, isLoading, isError } = useSearchAnimes(query);
 
+  // Usar useMemo para evitar re-renderizações desnecessárias
+  const renderedAnimes = useMemo(() => {
+    return animes?.map((anime) => (
+      <CardAnime key={anime.mal_id} anime={anime} variant="list" />
+    ));
+  }, [animes]);
+
   return (
     <main className="px-4 py-28 max-w-6xl mx-auto text-white min-h-screen">
       <h2 className="text-2xl font-bold mb-6">
-        Resultados para:{" "}
-        <span className="text-indigo-400">{query}</span>
+        Resultados para: <span className="text-indigo-400">{query}</span>
       </h2>
 
       {isLoading && (
@@ -31,11 +38,7 @@ export default function AnimeList() {
 
       {!isLoading && animes?.length > 0 && (
         <div className="flex flex-col gap-4">
-          <AnimatePresence>
-            {animes.map((anime) => (
-              <CardAnime key={anime.mal_id} anime={anime} variant="list" />
-            ))}
-          </AnimatePresence>
+          <AnimatePresence>{renderedAnimes}</AnimatePresence>
         </div>
       )}
     </main>

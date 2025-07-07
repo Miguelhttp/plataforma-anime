@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CardAnime from "./CardAnime";
@@ -12,13 +13,29 @@ export default function AnimeSection({
   isLoading,
   horizontal = false,
 }) {
-  // Remove animes duplicados
-  // O método findIndex é usado para encontrar o índice do primeiro elemento que satisfaz a condição fornecida.
-  // Se o índice do elemento atual for igual ao índice encontrado pelo findIndex, significa que o elemento é único.
-  const animeUnique = animes?.filter(
-    (anime, index, self) =>
-      index === self.findIndex((a) => a.mal_id === anime.mal_id)
-  );
+  const animeUnique = useMemo(() => {
+    return animes?.filter(
+      (anime, index, self) =>
+        index === self.findIndex((a) => a.mal_id === anime.mal_id)
+    );
+  }, [animes]);
+
+  const renderedAnimesCards = useMemo(() => {
+    return animeUnique?.map((anime) => (
+      <CardAnime key={anime.mal_id} anime={anime} />
+    ));
+  }, [animeUnique]);
+
+  const renderedAnimeSlides = useMemo(() => {
+    return animeUnique?.map((anime) => (
+      <SwiperSlide
+        key={anime.mal_id}
+        className="!h-auto !w-[140px] sm:!w-[160px] md:!w-[180px] px-1 sm:px-2 md:px-3"
+      >
+        <CardAnime anime={anime} variant="compact" />
+      </SwiperSlide>
+    ));
+  }, [animeUnique]);
 
   return (
     <section className="space-y-4 px-4 sm:px-6 md:px-8 lg:px-10">
@@ -56,20 +73,11 @@ export default function AnimeSection({
           navigation
           className="!pb-4"
         >
-          {animeUnique?.map((anime) => (
-            <SwiperSlide
-              key={anime.mal_id}
-              className="!h-auto !w-[140px] sm:!w-[160px] md:!w-[180px] px-1 sm:px-2 md:px-3"
-            >
-              <CardAnime anime={anime} variant="compact" />
-            </SwiperSlide>
-          ))}
+          {renderedAnimeSlides}
         </Swiper>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5">
-          {animeUnique?.map((anime) => (
-            <CardAnime key={anime.mal_id} anime={anime} />
-          ))}
+          {renderedAnimesCards}
         </div>
       )}
     </section>

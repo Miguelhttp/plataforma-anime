@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Star, Heart } from "lucide-react";
@@ -6,7 +7,7 @@ import { toast } from "react-toastify";
 import { useFavoritesStore } from "../../store/favoritesStore";
 import { useUser } from "@clerk/clerk-react";
 
-export default function CardAnime({ anime, variant = "default" }) {
+function CardAnime({ anime, variant = "default" }) {
   const addFavorite = useFavoritesStore((state) => state.addFavorite);
   const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
   const isFavorite = useFavoritesStore((state) => state.isFavorite);
@@ -169,3 +170,12 @@ export default function CardAnime({ anime, variant = "default" }) {
     </motion.div>
   );
 }
+
+function areEqual(prevProps, nextProps) {
+  return (
+    prevProps.anime.mal_id === nextProps.anime.mal_id &&
+    prevProps.variant === nextProps.variant
+  );
+}
+
+export default React.memo(CardAnime, areEqual);

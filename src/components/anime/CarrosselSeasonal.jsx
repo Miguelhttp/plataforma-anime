@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import { motion } from "framer-motion";
@@ -11,10 +12,23 @@ import CardAnimeSkeleton from "./CardAnimeSkeleton";
 export function CarrosselSeasonal() {
   const { data: animes, isLoading } = useSeasonalAnimes();
 
-  const animeUnique = animes?.filter(
-    (anime, index, self) =>
-      index === self.findIndex((a) => a.mal_id === anime.mal_id)
-  );
+  const animeUnique = useMemo(() => {
+    return animes?.filter(
+      (anime, index, self) =>
+        index === self.findIndex((a) => a.mal_id === anime.mal_id)
+    );
+  }, [animes]);
+
+  const renderedAnimeSlides = useMemo(() => {
+    return animeUnique?.map((anime) => (
+      <SwiperSlide
+        key={anime.mal_id}
+        className="!w-[140px] sm:!w-[160px] md:!w-[180px] !h-auto px-1 sm:px-2 md:px-3"
+      >
+        <CardAnime anime={anime} variant="compact" />
+      </SwiperSlide>
+    ));
+  }, [animeUnique]);
 
   return (
     <motion.section
@@ -46,14 +60,7 @@ export function CarrosselSeasonal() {
                 <CardAnimeSkeleton />
               </SwiperSlide>
             ))
-          : animeUnique.map((anime) => (
-              <SwiperSlide
-                key={anime.id}
-                className="!w-[140px] sm:!w-[160px] md:!w-[180px] !h-auto px-1 sm:px-2 md:px-3"
-              >
-                <CardAnime anime={anime} variant="compact" />
-              </SwiperSlide>
-            ))}
+          :  renderedAnimeSlides }
       </Swiper>
     </motion.section>
   );

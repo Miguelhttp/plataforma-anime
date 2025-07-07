@@ -1,4 +1,6 @@
-export default function CardAnimeSkeleton({ variant = "default" }) {
+import React from "react";
+
+function CardAnimeSkeleton({ variant = "default" }) {
   if (variant === "list") {
     return (
       <div className="bg-[#202024] rounded-lg overflow-hidden shadow-md animate-pulse w-full max-w-xl mx-auto flex gap-4 p-4 items-center">
@@ -23,3 +25,8 @@ export default function CardAnimeSkeleton({ variant = "default" }) {
     </div>
   );
 }
+
+export default React.memo(CardAnimeSkeleton, (prevProps, nextProps) => {
+  // Evita re-renderizações desnecessárias
+  return prevProps.variant === nextProps.variant;
+})
