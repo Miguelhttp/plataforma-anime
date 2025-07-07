@@ -1,0 +1,43 @@
+import { useSearch } from "@tanstack/react-router";
+import { AnimatePresence } from "framer-motion";
+import CardAnime from "../components/anime/CardAnime";
+import CardAnimeSkeleton from "../components/anime/CardAnimeSkeleton";
+import { useSearchAnimes } from "../hooks/useSearchAnimes";
+
+export default function AnimeList() {
+  const { query } = useSearch({ from: "/anime" });
+  const { data: animes, isLoading, isError } = useSearchAnimes(query);
+
+  return (
+    <main className="px-4 py-28 max-w-6xl mx-auto text-white min-h-screen">
+      <h2 className="text-2xl font-bold mb-6">
+        Resultados para:{" "}
+        <span className="text-indigo-400">{query}</span>
+      </h2>
+
+      {isLoading && (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {[...Array(8)].map((_, i) => (
+            <CardAnimeSkeleton key={i} variant="list" />
+          ))}
+        </div>
+      )}
+
+      {isError && <p className="text-red-500">Erro ao buscar animes.</p>}
+
+      {!isLoading && animes?.length === 0 && (
+        <p className="text-gray-400">Nenhum anime encontrado.</p>
+      )}
+
+      {!isLoading && animes?.length > 0 && (
+        <div className="flex flex-col gap-4">
+          <AnimatePresence>
+            {animes.map((anime) => (
+              <CardAnime key={anime.mal_id} anime={anime} variant="list" />
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
+    </main>
+  );
+}
