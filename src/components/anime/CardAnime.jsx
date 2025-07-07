@@ -1,11 +1,11 @@
-import React from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Star, Heart } from "lucide-react";
+import { Heart, Star } from "lucide-react";
+import React, { useCallback } from "react";
 import { toast } from "react-toastify";
 
-import { useFavoritesStore } from "../../store/favoritesStore";
 import { useUser } from "@clerk/clerk-react";
+import { useFavoritesStore } from "../../store/favoritesStore";
 
 function CardAnime({ anime, variant = "default" }) {
   const addFavorite = useFavoritesStore((state) => state.addFavorite);
@@ -13,9 +13,10 @@ function CardAnime({ anime, variant = "default" }) {
   const isFavorite = useFavoritesStore((state) => state.isFavorite);
   const { isSignedIn } = useUser();
 
-  const favorito = isFavorite(anime.mal_id);
+  const malId = anime.mal_id;
+  const favorito = isFavorite(malId);
 
-  const toggleFavorite = () => {
+  const toggleFavorite = useCallback(() => {
     if (!isSignedIn) {
       toast.info("Você precisa estar logado para favoritar animes.");
       return;
@@ -28,7 +29,7 @@ function CardAnime({ anime, variant = "default" }) {
       addFavorite(anime);
       toast.success("Anime adicionado aos favoritos!");
     }
-  };
+  }, [addFavorite, removeFavorite, favorito, isSignedIn, anime]);
 
   if (variant === "list") {
     // Variante para lista vertical tipo notificação

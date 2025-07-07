@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, Search, Sun, Moon, X, User } from "lucide-react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useThemeStore } from "../../store/themeStore";
 import SearchInput from "./SearchInput";
 import ProfileDropdown from "../anime/ProfileDropdown";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Search, Menu, Sun, Moon, User, X } from "lucide-react";
+import MobileMenu from "./MobileMenu";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,6 +13,9 @@ export default function Header() {
 
   const theme = useThemeStore((state) => state.theme);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
+
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
     <header className="stick w-full z-20 dark:bg-[#0D0D1C] shadow-md dark:shadow-black/20 py-4">
@@ -31,7 +34,7 @@ export default function Header() {
             />
           </button>
           <button
-            onClick={() => setMenuOpen((prev) => !prev)}
+            onClick={toggleMenu}
             aria-label="abrir Menu"
             aria-expanded={menuOpen}
           >
@@ -120,55 +123,12 @@ export default function Header() {
       )}
 
       {/* Menu Mobile */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "-100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "-100%" }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="sm:hidden mt-4 flex flex-col gap-2 text-white px-4"
-          >
-            <Link
-              to="/"
-              onClick={() => {
-                setMenuOpen(false);
-              }}
-              className="hover:text-indigo-400"
-            >
-              Início
-            </Link>
-            <Link
-              to="/profile"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-indigo-400"
-            >
-              Perfil
-            </Link>
-            <Link
-              to="/favorites"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-indigo-400"
-            >
-              Favoritos
-            </Link>
-            <Link
-              to="/about"
-              onClick={() => setMenuOpen(false)}
-              className="hover:text-indigo-400"
-            >
-              Sobre
-            </Link>
-            <button
-              onClick={toggleTheme}
-              className="flex items-center gap-2 mt-2"
-            >
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-              Alternar tema
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <MobileMenu
+        menuOpen={menuOpen}
+        closeMenu={closeMenu}
+        toggleTheme={toggleTheme}
+        theme={theme}
+      />
     </header>
   );
 }
