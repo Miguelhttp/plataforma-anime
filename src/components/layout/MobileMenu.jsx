@@ -1,9 +1,12 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { Sun, Moon } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Moon, Sun } from "lucide-react";
+import { useGenres } from "../../hooks/useGenres";
+import React from "react";
+import GenresDropdown from "./GenresDropdown";
 
 const MobileMenu = React.memo(({ menuOpen, closeMenu, toggleTheme, theme }) => {
+  const { data: genres = [], isLoading } = useGenres();
   return (
     <AnimatePresence>
       {menuOpen && (
@@ -17,16 +20,35 @@ const MobileMenu = React.memo(({ menuOpen, closeMenu, toggleTheme, theme }) => {
           <Link to="/" onClick={closeMenu} className="hover:text-indigo-400">
             Início
           </Link>
-          <Link to="/profile" onClick={closeMenu} className="hover:text-indigo-400">
+          {/* Dropdown de gêneros */}
+          {!isLoading && genres.length > 0 && (
+            <GenresDropdown genres={genres} />
+          )}
+          <Link
+            to="/profile"
+            onClick={closeMenu}
+            className="hover:text-indigo-400"
+          >
             Perfil
           </Link>
-          <Link to="/favorites" onClick={closeMenu} className="hover:text-indigo-400">
+          <Link
+            to="/favorites"
+            onClick={closeMenu}
+            className="hover:text-indigo-400"
+          >
             Favoritos
           </Link>
-          <Link to="/about" onClick={closeMenu} className="hover:text-indigo-400">
+          <Link
+            to="/about"
+            onClick={closeMenu}
+            className="hover:text-indigo-400"
+          >
             Sobre
           </Link>
-          <button onClick={toggleTheme} className="flex items-center gap-2 mt-2">
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 mt-2"
+          >
             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
             Alternar tema
           </button>

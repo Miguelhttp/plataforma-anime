@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import ImageError from "../assets/image-error.png";
 
 export default function ErrorPage() {
-  console.log("Página de erro ativada")
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}

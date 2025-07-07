@@ -1,15 +1,18 @@
+import { SignInButton, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Link } from "@tanstack/react-router";
-import { useState, useCallback } from "react";
+import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
+import { useCallback, useState } from "react";
+import { useGenres } from "../../hooks/useGenres";
 import { useThemeStore } from "../../store/themeStore";
-import SearchInput from "./SearchInput";
 import ProfileDropdown from "../anime/ProfileDropdown";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
-import { Search, Menu, Sun, Moon, User, X } from "lucide-react";
+import GenresDropdown from "./GenresDropdown";
 import MobileMenu from "./MobileMenu";
+import SearchInput from "./SearchInput";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const { data: genres = [], isLoading } = useGenres();
 
   const theme = useThemeStore((state) => state.theme);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
@@ -66,6 +69,10 @@ export default function Header() {
             >
               Início
             </Link>
+            {/* Dropdown de gêneros */}
+            {!isLoading && genres.length > 0 && (
+              <GenresDropdown genres={genres} />
+            )}
             <Link
               to="/profile"
               className="hover:text-gray-500 dark:hover:text-white transition-colors"

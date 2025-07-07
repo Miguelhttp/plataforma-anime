@@ -10,8 +10,8 @@ export default function AnimeDetails() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-60">
-        <LoadingSpinner size={10} />
+      <div className="flex justify-center flex-col items-center h-60">
+        <LoadingSpinner size={32} />
         <p className="text-white animate-pulse">
           Carregando detalhes do anime...
         </p>

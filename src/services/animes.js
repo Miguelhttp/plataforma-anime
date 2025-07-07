@@ -4,6 +4,16 @@ const api = axios.create({
   baseURL: "https://api.jikan.moe/v4",
 });
 
+export const getGenres = async () => {
+  try {
+    const response = await api.get("/genres/anime");
+    return response.data.data || []
+  } catch (error) {
+    console.error("Erro ao buscar gêneros:", error);
+    return [];
+  }
+}
+
 // Input de busca de animes
 export const searchAnimes = async (query) => {
   if (!query) return [];
