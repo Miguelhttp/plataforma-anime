@@ -6,6 +6,7 @@ import { useRecommendedAnimes } from "../hooks/useRecommendedAnimes";
 import { useTopAnimes } from "../hooks/useTopAnimes";
 
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import HeroBanner from "../components/common/HeroBanner";
 
 const SECTIONS = [
   { title: "Top Animes", hook: useTopAnimes },
@@ -34,6 +35,10 @@ export default function Home() {
 
   return (
     <main className="space-y-12 py-14 px-4 sm:px-6 md:px-8">
+      <section className="px-4 sm:px-6 md:px-8">
+        <HeroBanner />
+      </section>
+
       <section>
         <CarrosselSeasonal />
       </section>
