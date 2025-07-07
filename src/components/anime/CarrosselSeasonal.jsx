@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import { motion } from "framer-motion";
 
 import "swiper/css";
@@ -45,7 +45,7 @@ export function CarrosselSeasonal() {
 
       <Swiper
         spaceBetween={26}
-        modules={[Pagination]}
+        modules={[Navigation]}
         pagination={{ clickable: true }}
         navigation
         slidesPerView={"auto"}

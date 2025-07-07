@@ -2,9 +2,10 @@ import { useParams } from "@tanstack/react-router";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { useAnimeById } from "../hooks/useAnimeById";
 
+import RelatedAnime from "../components/anime/RelatedAnime";
+
 export default function AnimeDetails() {
   const { id } = useParams({ from: "/anime/$id"});
-  console.log(id);
   const { data: anime, isLoading, isError } = useAnimeById(id);
 
   if (isLoading) {
@@ -91,6 +92,8 @@ export default function AnimeDetails() {
           </div>
         </div>
       )}
+
+      <RelatedAnime animeId={anime.mal_id} animeTitle={anime.title} />
     </section>
   );
 }

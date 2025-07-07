@@ -37,7 +37,7 @@ const HeroBanner = () => {
   const featuredAnime = data.slice(0, 5);
 
   return (
-    <div className="h-96 md:h-[500px] lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
+    <div className="h-96 md:h-[500px] lg:h-[650px] rounded-lg overflow-hidden shadow-lg">
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
