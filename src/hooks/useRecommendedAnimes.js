@@ -6,4 +6,4 @@ export const useRecommendedAnimes = () => {
     queryKey: ["recommendedAnimes"],
     queryFn: getRecommendedAnimes,
   });
-}
+};
