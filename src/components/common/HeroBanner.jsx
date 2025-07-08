@@ -51,10 +51,11 @@ const HeroBanner = () => {
             <div
               className="relative w-full h-full bg-cover bg-center transition-all duration-700"
               style={{
-                backgroundImage: `url(${anime.images?.webp?.large_image_url})`,
+                backgroundImage: `url(${anime.images?.jpg?.large_image_url})`,
+                filter: "contrast(1.2) brightness(0.95)",
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+              <div className="absolute inset-0 backdrop-blur-[1px] bg-black/40" />
 
               <motion.div
                 initial={{ opacity: 0, y: 40 }}

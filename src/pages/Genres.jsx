@@ -36,9 +36,9 @@ export default function Genres() {
       {animes.length === 0 ? (
         <p className="text-center">Nenhum anime encontrado para este gênero.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="flex flex-col gap-5">
           {animes.map((anime) => (
-            <CardAnime key={anime.mal_id} anime={anime} />
+            <CardAnime key={anime.mal_id} anime={anime} variant="list" />
           ))}
         </div>
       )}
