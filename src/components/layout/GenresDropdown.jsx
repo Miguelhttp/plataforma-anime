@@ -58,7 +58,7 @@ export default function GenresDropdown({ genres }) {
                   className="px-4 py-2 hover:bg-indigo-600 cursor-pointer"
                 >
                   <Link
-                    to={`/genre/${genre.mal_id}`}
+                    to={`/genres/${genre.mal_id}`}
                     onClick={() => setOpen(false)}
                     className="block"
                     role="menuitem"

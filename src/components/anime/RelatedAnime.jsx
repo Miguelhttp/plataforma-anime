@@ -74,14 +74,14 @@ const RelatedAnime = ({ animeId, animeTitle }) => {
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       aria-busy={isLoading}
-      className="px-4 sm:px-6 md:px-8 lg:px-8 mt-12 space-y-4"
+      className="px-4 sm:px-6 lg:px-8 mt-12 space-y-4"
     >
       <h2 className="bg-gradient-to-r from-pink-500 to-violet-600 bg-clip-text text-transparent text-2xl font-bold px-2 sm:px-4 mb-4">
         Animes parecidos com {shortTitle}
       </h2>
 
       <Swiper
-        spaceBetween={40}
+        spaceBetween={44}
         modules={[Navigation]}
         navigation
         slidesPerView={"auto"}

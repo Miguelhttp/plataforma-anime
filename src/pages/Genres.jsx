@@ -30,7 +30,7 @@ export default function Genres() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-8 text-white">
-      <h1 className="text-3xl font-bold mb-6">Animes do Gênero {genreName}</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center bg-gradient-to-r from-pink-500 to-violet-600 bg-clip-text text-transparent">Animes do Gênero {genreName}</h1>
 
       {/* Lista de animes */}
       {animes.length === 0 ? (
