@@ -3,8 +3,7 @@ import { useThemeStore } from "../store/themeStore";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 
 export const useThemeManager = () => {
-  const { theme, toggleTheme, setTheme, isDark, setSystemDark } =
-    useThemeStore();
+  const { theme, toggleTheme, setTheme, isDark } = useThemeStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,13 +23,7 @@ export const useThemeManager = () => {
 
   // Detectar mudanças na preferência do sistema
   useEffect(() => {
-    if (!mounted) {
-      return (
-        <div className="flex items-center justify-center h-screen">
-          <LoadingSpinner size={32} color />
-        </div>
-      );
-    }
+    if (!mounted) return;
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -44,7 +37,6 @@ export const useThemeManager = () => {
     };
 
     mediaQuery.addEventListener("change", handleChange);
-
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, [mounted, setTheme]);
 
@@ -80,6 +72,5 @@ export const useThemeManager = () => {
     setTheme,
     isDark: isDark(),
     getThemeClasses,
-    setSystemDark,
   };
 };

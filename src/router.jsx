@@ -18,7 +18,7 @@ import ProtectedUserProfile from "./pages/ProtectedUserProfile.jsx";
 //INFO: ROTA ROOT
 const rootRoute = createRootRoute({
   component: App,
-  errorComponent: () => <p>Ocorreu um erro inesperado.</p>,
+  errorComponent: ErrorPage,
 });
 
 //INFO: ROTA ANIMES (/animes?q=alguma-coisa)
