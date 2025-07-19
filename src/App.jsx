@@ -10,14 +10,14 @@ export default function App() {
 
   if (!mounted) return null;
 
+  const themeClasses = {
+    dark: "dark min-h-screen bg-gradient-to-b from-[#0D0D1C] to-[#15152B] text-white",
+    light:
+      "min-h-screen bg-gradient-to-br from-[#F5F8FF] from-10% via-[#eceeff] via-30% to-indigo-600 to-90% text-gray-900",
+  };
+
   return (
-    <div
-      className={
-        theme === "dark"
-          ? "dark min-h-screen bg-gradient-to-b from-[#0D0D1C] to-[#15152B]"
-          : "min-h-screen bg-gradient-to-br from-[#F5F8FF] from-10% via-[#eceeff] via-30% to-indigo-600 to-90%"
-      }
-    >
+    <div className={themeClasses[theme]}>
       <Header />
       <ErrorBoundary>
         <AnimatedRoutes />

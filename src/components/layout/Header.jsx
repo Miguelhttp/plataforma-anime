@@ -1,9 +1,9 @@
 import { SignInButton, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Link } from "@tanstack/react-router";
 import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useGenres } from "../../hooks/useGenres";
-import { useThemeStore } from "../../store/themeStore";
+import { useThemeManager } from "../../providers/ThemeManager";
 import ProfileDropdown from "../anime/ProfileDropdown";
 import GenresDropdown from "./GenresDropdown";
 import MobileMenu from "./MobileMenu";
@@ -13,15 +13,34 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const { data: genres = [], isLoading } = useGenres();
+  const { theme, getThemeClasses, toggleTheme } = useThemeManager();
 
-  const theme = useThemeStore((state) => state.theme);
-  const toggleTheme = useThemeStore((state) => state.toggleTheme);
-
+  // Memorizar callbacks para evitar re-renders
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
+  // Memorizar classes CSS
+  const headerClasses = useMemo(
+    () =>
+      `sticky top-0 w-full z-20 shadow-md py-4 transition-colors duration-200 ${
+        getThemeClasses("header") ||
+        (theme === "dark"
+          ? "bg-[#0D0D1C]/95 backdrop-blur-sm shadow-black/20"
+          : "bg-white/95 backdrop-blur-sm shadow-gray-200/50")
+      }`,
+    [theme, getThemeClasses]
+  );
+
+  const linkClasses = useMemo(
+    () =>
+      theme === "dark"
+        ? "text-gray-300 hover:text-white transition-colors duration-200"
+        : "text-gray-600 hover:text-gray-900 transition-colors duration-200",
+    [theme]
+  );
+
   return (
-    <header className="stick w-full z-20 dark:bg-[#0D0D1C] shadow-md dark:shadow-black/20 py-4">
+    <header className={headerClasses}>
       {/* Container principal */}
       <div className="flex items-center justify-between w-full max-w-6xl mx-auto px-4">
         {/* Esquerda - Ícones Mobile */}
@@ -56,39 +75,35 @@ export default function Header() {
         </div>
 
         {/* Centro - Título */}
-        <h1 className="text-xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-white transition-colors text-center sm:text-2xl">
-          <Link to="/">ANIMEHUB</Link>
+        <h1
+          className={`text-xl font-bold font-heading text-center sm:text-2xl transition-colors duration-200 ${
+            theme === "dark"
+              ? "text-indigo-400 hover:text-indigo-300"
+              : "text-indigo-600 hover:text-indigo-700"
+          }`}
+        >
+          <Link to="/" className="block">
+            ANIMEHUB
+          </Link>
         </h1>
 
         {/* Direita - Desktop (Navegação + Busca + Ações) */}
         <div className="hidden sm:flex items-center gap-6">
           <nav className="flex gap-6 text-gray-300 text-base">
-            <Link
-              to="/"
-              className="hover:text-gray-500 dark:hover:text-white transition-colors"
-            >
+            <Link to="/" className={linkClasses}>
               Início
             </Link>
             {/* Dropdown de gêneros */}
             {!isLoading && Array.isArray(genres) && genres.length > 0 && (
-              <GenresDropdown genres={genres} />
+              <GenresDropdown genres={genres} theme={theme} />
             )}
-            <Link
-              to="/profile"
-              className="hover:text-gray-500 dark:hover:text-white transition-colors"
-            >
+            <Link to="/profile" className={linkClasses}>
               Perfil
             </Link>
-            <Link
-              to="/favorites"
-              className="hover:text-gray-500 dark:hover:text-white transition-colors"
-            >
+            <Link to="/favorites" className={linkClasses}>
               Favoritos
             </Link>
-            <Link
-              to="/about"
-              className="hover:text-gray-500 dark:hover:text-white transition-colors"
-            >
+            <Link to="/about" className={linkClasses}>
               Sobre
             </Link>
           </nav>
@@ -105,7 +120,7 @@ export default function Header() {
             )}
           </button>
 
-          {/* CONTROLE DE USUÁRIO LOGADO/DESLOGADO */}
+          {/* CONTROLE DE USUÁRIO LOGADO/INATIVO */}
           <SignedIn>
             <ProfileDropdown />
           </SignedIn>

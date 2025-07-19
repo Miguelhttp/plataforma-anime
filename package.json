@@ -13,6 +13,7 @@
     "@clerk/themes": "^2.2.54",
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
+    "@tanstack/react-query-devtools": "^5.83.0",
     "@tanstack/react-router": "^1.123.2",
     "axios": "^1.10.0",
     "clsx": "^2.1.1",

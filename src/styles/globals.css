@@ -1,7 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-family-sans: "Noto Sans JP", ui-sans-serif, system-ui, sans-serif;
+  --font-family-heading: "Plus Jakarta Sans", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-family-mono: "JetBrains Mono", ui-monospace, "Cascadia Code",
+    "Source Code Pro", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+}
 
 @layer base {
   *,
@@ -15,11 +23,10 @@
   html {
     scroll-behavior: smooth;
     line-height: 1.5;
-    color-scheme: dark light;
   }
 
   body {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: var(--font-family-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -28,12 +35,15 @@
     font-size: 1.25rem;
   }
 
-  h1, h2, h3, h4 {
-    font-family: "Plus Jakarta Sans", sans-serif;
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-family-heading);
   }
 
-  code, pre {
-    font-family: 'JetBrains Mono', monospace;
+  code,
+  pre {
+    font-family: var(--font-family-mono);
   }
 }
-

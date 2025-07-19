@@ -1,12 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
+import React, { useMemo } from "react";
 import { useGenres } from "../../hooks/useGenres";
-import React from "react";
 import GenresDropdown from "./GenresDropdown";
 
 const MobileMenu = React.memo(({ menuOpen, closeMenu, toggleTheme, theme }) => {
   const { data: genres = [], isLoading } = useGenres();
+
+  const linkClasses = useMemo(
+    () =>
+      theme === "dark"
+        ? "text-gray-300 hover:text-white transition-colors duration-200"
+        : "text-gray-600 hover:text-gray-900 transition-colors duration-200",
+    [theme]
+  );
+
   return (
     <AnimatePresence>
       {menuOpen && (
@@ -17,32 +26,20 @@ const MobileMenu = React.memo(({ menuOpen, closeMenu, toggleTheme, theme }) => {
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
           className="sm:hidden mt-4 flex flex-col gap-2 text-white px-4"
         >
-          <Link to="/" onClick={closeMenu} className="hover:text-indigo-400">
+          <Link to="/" onClick={closeMenu} className={linkClasses}>
             Início
           </Link>
           {/* Dropdown de gêneros */}
-          {!isLoading && genres.length > 0 && (
-            <GenresDropdown genres={genres} />
+          {!isLoading && Array.isArray(genres) && genres.length > 0 && (
+            <GenresDropdown genres={genres} theme={theme} />
           )}
-          <Link
-            to="/profile"
-            onClick={closeMenu}
-            className="hover:text-indigo-400"
-          >
+          <Link to="/profile" onClick={closeMenu} className={linkClasses}>
             Perfil
           </Link>
-          <Link
-            to="/favorites"
-            onClick={closeMenu}
-            className="hover:text-indigo-400"
-          >
+          <Link to="/favorites" onClick={closeMenu} className={linkClasses}>
             Favoritos
           </Link>
-          <Link
-            to="/about"
-            onClick={closeMenu}
-            className="hover:text-indigo-400"
-          >
+          <Link to="/about" onClick={closeMenu} className={linkClasses}>
             Sobre
           </Link>
           <button
