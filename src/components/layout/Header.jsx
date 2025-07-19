@@ -12,7 +12,7 @@ import SearchInput from "./SearchInput";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const { data: genres = [], isLoading } = useGenres();
+  const { data: genres = [], isLoading, isError } = useGenres();
 
   const theme = useThemeStore((state) => state.theme);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
@@ -69,9 +69,18 @@ export default function Header() {
             >
               Início
             </Link>
-            {/* Dropdown de gêneros */}
-            {!isLoading && Array.isArray(genres) && genres.length > 0 && (
+            {isLoading ? (
+              <span className="text-gray-300 animate-pulse">
+                Carregando gêneros...
+              </span>
+            ) : isError ? (
+              <span className="text-red-500">Erro ao carregar gêneros</span>
+            ) : genres.length > 0 ? (
               <GenresDropdown genres={genres} />
+            ) : (
+              <span className="text-gray-300 opacity-50">
+                Gêneros indisponíveis
+              </span>
             )}
             <Link
               to="/profile"

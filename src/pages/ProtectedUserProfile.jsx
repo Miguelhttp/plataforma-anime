@@ -20,7 +20,7 @@ export default function ProtectedUserProfile() {
       </SignedIn>
       <SignedOut>
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-          <h2 className="text-lg sm:text-2xl mb-4">
+          <h2 className="text-lg sm:text-2xl mb-4 text-gray-700 font-bold">
             Você precisa estar logado para acessar o perfil.
           </h2>
           <SignInButton mode="modal">

@@ -32,7 +32,7 @@ export default function GenresDropdown({ genres }) {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className="flex items-center gap-1 hover:text-gray-500 dark:hover:text-white transition-colors"
+        className="flex items-center gap-1 hover:text-indigo-500 dark:hover:text-white transition-colors"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="menu"

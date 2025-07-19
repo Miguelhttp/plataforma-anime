@@ -45,7 +45,7 @@ export default function AnimeDetails() {
         </div>
 
         <div className="flex flex-1 flex-col">
-          <h1 className="text-3xl text-center font-bold mb-2">{anime.title}</h1>
+          <h1 className="text-3xl text-gray-600 text-center font-bold mb-2">{anime.title}</h1>
           <p className="text-gray-300 italic text-sm mb-4">
             {anime.title_japanese}
           </p>
@@ -71,7 +71,7 @@ export default function AnimeDetails() {
 
           {/* Sinopse com altura limitada e scroll se for longa */}
           <div
-            className="text-gray-300 text-base leading-relaxed mb-4 max-h-48 overflow-y-auto pr-2"
+            className="text-gray-600 font-semibold text-base leading-relaxed mb-4 max-h-48 overflow-y-auto pr-2"
             style={{ scrollbarWidth: "thin" }}
           >
             {anime.synopsis || "Sinopse indisponível."}
@@ -81,7 +81,7 @@ export default function AnimeDetails() {
 
       {anime.trailer?.embed_url && (
         <div className="mt-12">
-          <h2 className="text-2xl font-semibold mb-2">Trailer</h2>
+          <h2 className="text-2xl text-gray-600 font-semibold mb-2">Trailer</h2>
           <div className="rounded-xl overflow-hidden shadow-lg h-full">
             <iframe
               src={anime.trailer.embed_url}

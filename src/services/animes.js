@@ -9,12 +9,25 @@ const api = axios.create({
 export const getGenres = async () => {
   try {
     const response = await api.get("/genres/anime");
+    console.log("Resposta da API:", response.data);
     return response.data.data || []
   } catch (error) {
     console.error("Erro ao buscar gêneros:", error);
     return [];
   }
 }
+
+// Busca os animes por gênero
+export const getAnimesByGenre = async (genreId, page = 1) => {
+  const response = await api.get("/anime", {
+    params: {
+      genres: genreId,
+      page,
+      limit: 24, // Limite de animes por gênero
+    },
+  });
+  return response.data.data || [];
+};
 
 // Input de busca de animes
 export const searchAnimes = async (query) => {
@@ -61,18 +74,6 @@ export const getSeasonalAnimes = async () => {
 export const getAnimeById = async (id) => {
   const response = await api.get(`/anime/${id}`);
   return response.data.data;
-};
-
-// Busca os animes por gênero
-export const getAnimesByGenre = async (genreId, page = 1) => {
-  const response = await api.get("/anime", {
-    params: {
-      genres: genreId,
-      page,
-      limit: 24, // Limite de animes por gênero
-    },
-  });
-  return response.data.data || [];
 };
 
 // Busca os animes populares

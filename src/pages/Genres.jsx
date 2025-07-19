@@ -8,14 +8,14 @@ export default function Genres() {
   const { genreId } = useParams({ from: "/genres/$genreId" });
   const genreIdNumber = Number(genreId);
 
-  const { data: genres = [] } = useGenres();
-  const { data: animes, isLoading, isError } = useAnimesByGenre(genreIdNumber);
+  const { data: genres = [], isLoading: isLoadingGenres } = useGenres();
+  const { data: animes, isLoading: isLoadingAnimes, isError } = useAnimesByGenre(genreIdNumber);
 
   // Buscar por nome do gênero pelo ID
   const genreName =
     genres.find((genre) => genre.mal_id === genreIdNumber)?.name || "Gênero";
 
-  if (isLoading)
+  if (isLoadingAnimes || isLoadingGenres)
     return (
       <div className="flex justify-center items-center h-screen">
         <LoadingSpinner size={32} />

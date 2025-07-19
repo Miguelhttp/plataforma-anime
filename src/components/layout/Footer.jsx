@@ -14,10 +14,10 @@ export default function Footer() {
         </div>
 
         {/* Direitos autorais */}
-        <div className="text-xs text-gray-500 flex items-end justify-center md:justify-end">
+        <p className="text-xs text-gray-700 font-semibold flex items-end justify-center md:justify-end">
           © {new Date().getFullYear()} Plataforma Anime. Todos os direitos
           reservados.
-        </div>
+        </p>
       </div>
     </footer>
   );

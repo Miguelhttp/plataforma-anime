@@ -14,7 +14,7 @@ export default function Favorites() {
           <h1 className="text-lg sm:text-3xl font-bold text-white text-center">
             Você precisa estar logado para ver seus animes favoritos
           </h1>
-          <p className="text-gray-400 mt-2 text-base text-center">
+          <p className="text-gray-600 font-semibold mt-2 text-base text-center">
             Faça login ou crie uma conta para acessar seus favoritos.
           </p>
         </div>
