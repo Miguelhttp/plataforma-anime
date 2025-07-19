@@ -70,7 +70,7 @@ export default function Header() {
               Início
             </Link>
             {/* Dropdown de gêneros */}
-            {!isLoading && genres.length > 0 && (
+            {!isLoading && Array.isArray(genres) && genres.length > 0 && (
               <GenresDropdown genres={genres} />
             )}
             <Link
