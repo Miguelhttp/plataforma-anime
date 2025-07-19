@@ -8,19 +8,35 @@ import { useTopAnimes } from "../hooks/useTopAnimes";
 import { HeroBanner } from "../components/common/HeroBanner";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 
-const SECTIONS = [
-  { title: "Top Animes", hook: useTopAnimes },
-  { title: "Animes recomendados", hook: useRecommendedAnimes },
-  { title: "Aventura", hook: () => useAnimesByGenre(2) },
-  { title: "Misterio", hook: () => useAnimesByGenre(7) },
-];
-
 export default function Home() {
   // Usar o hook para cada seção e armazenar os dados em um array
-  const sectionsData = SECTIONS.map(({ title, hook }) => {
-    const { data, isLoading } = hook();
-    return { title, data, isLoading };
-  });
+  const topAnimes = useTopAnimes();
+  const recommendedAnimes = useRecommendedAnimes();
+  const adventureAnimes = useAnimesByGenre(2);
+  const mysteryAnimes = useAnimesByGenre(7);
+
+  const sectionsData = [
+    {
+      title: "Top Animes",
+      data: topAnimes.data,
+      isLoading: topAnimes.isLoading,
+    },
+    {
+      title: "Animes recomendados",
+      data: recommendedAnimes.data,
+      isLoading: recommendedAnimes.isLoading,
+    },
+    {
+      title: "Aventura",
+      data: adventureAnimes.data,
+      isLoading: adventureAnimes.isLoading,
+    },
+    {
+      title: "Misterio",
+      data: mysteryAnimes.data,
+      isLoading: mysteryAnimes.isLoading,
+    },
+  ];
 
   // Verifica se algum dos hooks está carregando
   const isLoading = sectionsData.some(({ isLoading }) => isLoading);

@@ -17,8 +17,8 @@ export default function AnimeList() {
   }, [animes]);
 
   return (
-    <main className="px-4 py-28 max-w-6xl mx-auto text-white min-h-screen">
-      <h2 className="text-2xl font-bold mb-6">
+    <main className="px-4 max-w-6xl mx-auto text-white min-h-screen">
+      <h2 className="text-3xl font-bold mt-6 text-center">
         Resultados para: <span className="text-indigo-400">{query}</span>
       </h2>
 

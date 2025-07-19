@@ -172,6 +172,7 @@ function CardAnime({ anime, variant = "default" }) {
   );
 }
 
+// Função de comparação para evitar renderizações desnecessárias
 function areEqual(prevProps, nextProps) {
   return (
     prevProps.anime.mal_id === nextProps.anime.mal_id &&

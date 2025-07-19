@@ -74,9 +74,9 @@ const RelatedAnime = ({ animeId, animeTitle }) => {
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       aria-busy={isLoading}
-      className="px-2 sm:px-6 lg:px-8 mt-12 space-y-4"
+      className="px-none sm:px-4 mt-12 space-y-4"
     >
-      <h2 className="bg-gradient-to-r from-pink-500 to-violet-600 bg-clip-text text-transparent text-2xl font-bold px-2 sm:px-4 mb-4">
+      <h2 className="bg-gradient-to-r from-pink-500 to-violet-600 bg-clip-text text-transparent text-base sm:text-2xl font-bold px-1 sm:px-4 mb-4">
         Animes parecidos com {shortTitle}
       </h2>
 

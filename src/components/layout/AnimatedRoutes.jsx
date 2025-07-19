@@ -1,10 +1,10 @@
-import { Outlet, useRouterState } from "@tanstack/react-router";
+import { Outlet } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { Suspense } from "react";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function AnimatedRoutes() {
-  const locationKey = useRouterState({ select: (state) => state.location.key });
+  const locationKey = window.location.pathname;
 
   return (
     <Suspense

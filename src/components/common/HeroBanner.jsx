@@ -27,11 +27,11 @@ export function HeroBanner() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative z-10 h-full flex flex-col justify-center items-start p-6 md:p-12 text-white"
       >
-        <h1 className="text-4xl md:text-5xl font-bold drop-shadow-xl mb-4 bg-gradient-to-r from-gray-200 to-purple-600 bg-clip-text text-transparent">
+        <h1 className="hidden md:block text-4xl md:text-5xl font-bold drop-shadow-xl mb-4 bg-gradient-to-r from-gray-200 to-purple-600 bg-clip-text text-transparent">
           Eleve-se com Sung Jin-Woo
         </h1>
 
-        <p className="text-lg md:text-xl text-gray-300 max-w-2xl drop-shadow-md mb-6">
+        <p className="hidden md:block text-lg md:text-xl text-gray-300 max-w-2xl drop-shadow-md mb-6">
           Acompanhe a jornada do caçador mais forte em Solo Leveling e mergulhe
           em batalhas intensas e evolução constante.
         </p>

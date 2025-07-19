@@ -1,19 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function GenresDropdown({ genres, theme }) {
+export default function GenresDropdown({ genres }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  const linkClasses = useMemo(
-    () =>
-      theme === "dark"
-        ? "text-gray-300 hover:text-white transition-colors duration-200"
-        : "text-gray-600 hover:text-gray-900 transition-colors duration-200",
-    [theme]
-  );
 
   // Fecha ao clicar fora do dropdown
   useEffect(() => {
@@ -40,7 +32,7 @@ export default function GenresDropdown({ genres, theme }) {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className={linkClasses}
+        className="flex items-center gap-1 hover:text-gray-500 dark:hover:text-white transition-colors"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="menu"

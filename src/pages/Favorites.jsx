@@ -10,11 +10,11 @@ export default function Favorites() {
   if (!isSignedIn) {
     return (
       <WrapperPage>
-        <div className="flex flex-col items-center justify-center h-screen">
-          <h1 className="text-3xl font-bold text-white">
+        <div className="flex flex-col items-center justify-center h-screen mx-auto">
+          <h1 className="text-lg sm:text-3xl font-bold text-white text-center">
             Você precisa estar logado para ver seus animes favoritos
           </h1>
-          <p className="text-gray-400 mt-2">
+          <p className="text-gray-400 mt-2 text-base text-center">
             Faça login ou crie uma conta para acessar seus favoritos.
           </p>
         </div>
