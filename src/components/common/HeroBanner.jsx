@@ -1,91 +1,41 @@
-import { Link } from "@tanstack/react-router";
-import React from "react";
-import { Autoplay, EffectFade, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { useTopAnimes } from "../../hooks/useTopAnimes";
-import LoadingSpinner from "./LoadingSpinner";
 import { motion } from "framer-motion";
+import bannerMobileImage from "../../assets/banner-mobile.png";
+import bannerImage from "../../assets/banner.png";
 
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
-
-const HeroBanner = () => {
-  const { data, isLoading, isError, error } = useTopAnimes();
-
-  // Verifica se o anime em destaque foi carregado com sucesso
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <LoadingSpinner size={32} color="text-red-500" />
-      </div>
-    );
-  }
-
-  // Exibe uma mensagem de erro em caso de falha na busca
-  if (isError || !data || data.length === 0) {
-    return (
-      <div className="w-full h-96 md:h-[500px] lg:h-[600px] flex items-center justify-center bg-red-900 text-white rounded-lg shadow-lg">
-        <p>
-          Ocorreu um erro ao carregar o banners:{" "}
-          {error?.message || "Erro desconhecido"}
-        </p>
-      </div>
-    );
-  }
-
-  const featuredAnime = data.slice(0, 5);
-
+export function HeroBanner() {
   return (
-    <div className="h-96 md:h-[500px] lg:h-[650px] rounded-lg overflow-hidden shadow-lg">
-      <Swiper
-        modules={[Autoplay, Pagination, EffectFade]}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-        loop
-        effect="fade"
-        className="h-full w-full"
+    <div className="relative h-96 md:h-[500px] lg:h-[650px] w-full rounded-lg overflow-hidden shadow-lg bg-gradient-to-br from-purple-800 via-indigo-700 to-blue-700">
+      {/* Imagem para desktop (md e acima) */}
+      <img
+        src={bannerImage}
+        alt="Sung Jinwoo"
+        className="hidden md:block absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"
+      />
+
+      {/* Imagem para mobile (abaixo de md) */}
+      <img
+        src={bannerMobileImage}
+        alt="Sung Jinwoo Mobile"
+        className="block md:hidden absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none"
+      />
+
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/70" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative z-10 h-full flex flex-col justify-center items-start p-6 md:p-12 text-white"
       >
-        {featuredAnime.map((anime) => (
-          <SwiperSlide key={anime.mal_id}>
-            <div
-              className="relative w-full h-full bg-cover bg-center transition-all duration-700"
-              style={{
-                backgroundImage: `url(${anime.images?.jpg?.large_image_url})`,
-                filter: "contrast(1.2) brightness(0.95)",
-              }}
-            >
-              <div className="absolute inset-0 backdrop-blur-[1px] bg-black/40" />
+        <h1 className="text-4xl md:text-5xl font-bold drop-shadow-xl mb-4 bg-gradient-to-r from-gray-200 to-purple-600 bg-clip-text text-transparent">
+          Eleve-se com Sung Jin-Woo
+        </h1>
 
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="relative z-10 h-full flex flex-col justify-end p-6 md:p-10 lg:p-16 text-white"
-              >
-                <h1 className="text-3xl md:text-5xl font-bold mb-3 drop-shadow-lg">
-                  {anime.title}
-                </h1>
-
-                <p className="text-base text-gray-400 md:text-lg lg:text-xl mb-6 max-w-2xl drop-shadow-md line-clamp-3">
-                  {anime.synopsis || "Nenhuma descrição disponível"}
-                </p>
-
-                <div>
-                  <Link
-                    to={`/anime/${anime.mal_id}`}
-                    className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md"
-                  >
-                    Ver detalhes
-                  </Link>
-                </div>
-              </motion.div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <p className="text-lg md:text-xl text-gray-300 max-w-2xl drop-shadow-md mb-6">
+          Acompanhe a jornada do caçador mais forte em Solo Leveling e mergulhe
+          em batalhas intensas e evolução constante.
+        </p>
+      </motion.div>
     </div>
   );
-};
-
-export default React.memo(HeroBanner);
+}
