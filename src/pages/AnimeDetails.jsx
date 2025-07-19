@@ -45,7 +45,7 @@ export default function AnimeDetails() {
         </div>
 
         <div className="flex flex-1 flex-col">
-          <h1 className="text-3xl font-bold mb-2">{anime.title}</h1>
+          <h1 className="text-3xl text-center font-bold mb-2">{anime.title}</h1>
           <p className="text-gray-300 italic text-sm mb-4">
             {anime.title_japanese}
           </p>

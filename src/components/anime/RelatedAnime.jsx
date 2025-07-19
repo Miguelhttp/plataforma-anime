@@ -28,7 +28,7 @@ const RelatedAnime = ({ animeId, animeTitle }) => {
     return relatedAnimes.map((anime) => (
       <SwiperSlide
         key={anime.mal_id}
-        className="!w-[140px] sm:!w-[160px] md:!w-[180px] !h-auto px-1 sm:px-2 md:px-3"
+        className="!w-[165px] sm:!w-[160px] md:!w-[180px] !h-auto px-1 sm:px-2 md:px-3"
       >
         <CardAnime anime={anime} variant="compact" />
       </SwiperSlide>
@@ -74,7 +74,7 @@ const RelatedAnime = ({ animeId, animeTitle }) => {
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       aria-busy={isLoading}
-      className="px-4 sm:px-6 lg:px-8 mt-12 space-y-4"
+      className="px-2 sm:px-6 lg:px-8 mt-12 space-y-4"
     >
       <h2 className="bg-gradient-to-r from-pink-500 to-violet-600 bg-clip-text text-transparent text-2xl font-bold px-2 sm:px-4 mb-4">
         Animes parecidos com {shortTitle}
@@ -85,24 +85,13 @@ const RelatedAnime = ({ animeId, animeTitle }) => {
         modules={[Navigation]}
         navigation
         slidesPerView={"auto"}
-        breakpoints={{
-          640: {
-            spaceBetween: 60,
-          },
-          768: {
-            spaceBetween: 48,
-          },
-          1024: {
-            spaceBetween: 24,
-          },
-        }}
         className="!pb-4 py-2"
       >
         {isLoading
           ? [...Array(10)].map((_, index) => (
               <SwiperSlide
                 key={index}
-                className="!w-[140px] sm:!w-[160px] md:!w-[180px] !h-auto px-1 sm:px-2 md:px-3"
+                className="!w-[180px] sm:!w-[160px] md:!w-[180px] !h-auto px-2 sm:px-2 md:px-3"
               >
                 <CardAnimeSkeleton />
               </SwiperSlide>

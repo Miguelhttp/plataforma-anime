@@ -30,7 +30,7 @@ export default function AnimeSection({
     return animeUnique?.map((anime) => (
       <SwiperSlide
         key={anime.mal_id}
-        className="!h-auto !w-[140px] sm:!w-[160px] md:!w-[180px] px-1 sm:px-2 md:px-3"
+        className="!h-auto !w-[180px] sm:!w-[160px] md:!w-[180px] px-1 sm:px-2 md:px-3"
       >
         <CardAnime anime={anime} variant="compact" />
       </SwiperSlide>

@@ -5,8 +5,8 @@ import { useAnimesByGenre } from "../hooks/useAnimesByGenre";
 import { useRecommendedAnimes } from "../hooks/useRecommendedAnimes";
 import { useTopAnimes } from "../hooks/useTopAnimes";
 
+import { HeroBanner } from "../components/common/HeroBanner";
 import LoadingSpinner from "../components/common/LoadingSpinner";
-import HeroBanner from "../components/common/HeroBanner";
 
 const SECTIONS = [
   { title: "Top Animes", hook: useTopAnimes },

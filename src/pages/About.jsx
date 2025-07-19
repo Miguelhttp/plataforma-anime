@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import CardProfile from "../components/anime/CardProfile";
-import profileImage from "../assets/profile.png";
+import imageProfile from "../assets/profile.png"
 
 export default function About() {
   return (
@@ -13,7 +13,7 @@ export default function About() {
       >
         <h1 className="text-3xl font-bold text-indigo-400">Sobre o AnimeHub</h1>
 
-        <p className="text-lg leading-relaxed">
+        <p className="text-lg leading-relaxed text-gray-100 ">
           O <strong>AnimeHub</strong> é uma plataforma desenvolvida com o
           objetivo de facilitar o acesso às informações sobre animes, tanto para
           iniciantes quanto para fãs experientes. Aqui você pode explorar
@@ -28,7 +28,7 @@ export default function About() {
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
         className="h-64 bg-gradient-to-br from-[#0D0D1C] via-[#15152B] to-[#1a1a2e] bg-[length:200%_200%] flex items-center justify-center px-4"
       >
-        <CardProfile avatar={profileImage} />
+        <CardProfile avatar={imageProfile} />
       </motion.div>
 
       <motion.section
