@@ -1,9 +1,8 @@
 import { SignInButton, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Link } from "@tanstack/react-router";
-import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
+import { Menu, Search, User, X } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useGenres } from "../../hooks/useGenres";
-import { useThemeStore } from "../../store/themeStore";
 import ProfileDropdown from "../anime/ProfileDropdown";
 import GenresDropdown from "./GenresDropdown";
 import MobileMenu from "./MobileMenu";
@@ -13,9 +12,6 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const { data: genres = [], isLoading, isError } = useGenres();
-
-  const theme = useThemeStore((state) => state.theme);
-  const toggleTheme = useThemeStore((state) => state.toggleTheme);
 
   const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
@@ -105,16 +101,7 @@ export default function Header() {
           {/* Campo de busca */}
           <SearchInput placeholder="Buscar anime..." />
 
-          {/* Botões tema/perfil */}
-          <button onClick={toggleTheme} aria-label="Alternar tema">
-            {theme === "dark" ? (
-              <Sun className="text-yellow-400" size={22} />
-            ) : (
-              <Moon className="text-blue-600" size={22} />
-            )}
-          </button>
-
-          {/* CONTROLE DE USUÁRIO LOGADO/DESLOGADO */}
+          {/* CONTROLE DE USUÁRIO LOGADO/INATIVO */}
           <SignedIn>
             <ProfileDropdown />
           </SignedIn>
@@ -139,12 +126,7 @@ export default function Header() {
       )}
 
       {/* Menu Mobile */}
-      <MobileMenu
-        menuOpen={menuOpen}
-        closeMenu={closeMenu}
-        toggleTheme={toggleTheme}
-        theme={theme}
-      />
+      <MobileMenu menuOpen={menuOpen} closeMenu={closeMenu} />
     </header>
   );
 }

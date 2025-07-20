@@ -5,7 +5,7 @@ import { useGenres } from "../../hooks/useGenres";
 import React from "react";
 import GenresDropdown from "./GenresDropdown";
 
-const MobileMenu = React.memo(({ menuOpen, closeMenu, toggleTheme, theme }) => {
+const MobileMenu = React.memo(({ menuOpen, closeMenu }) => {
   const { data: genres = [], isLoading } = useGenres();
   return (
     <AnimatePresence>
@@ -44,14 +44,7 @@ const MobileMenu = React.memo(({ menuOpen, closeMenu, toggleTheme, theme }) => {
             className="hover:text-indigo-400"
           >
             Sobre
-          </Link>
-          <button
-            onClick={toggleTheme}
-            className="flex items-center gap-2 mt-2"
-          >
-            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-            Alternar tema
-          </button>
+          </Link>        
         </motion.div>
       )}
     </AnimatePresence>

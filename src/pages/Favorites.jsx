@@ -26,7 +26,7 @@ export default function Favorites() {
     <WrapperPage>
       {favorites.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-screen">
-          <h1 className="text-3xl font-bold text-white">
+          <h1 className="text-lg md:text-3xl text-center font-bold text-white">
             Você ainda não tem animes favoritos
           </h1>
         </div>

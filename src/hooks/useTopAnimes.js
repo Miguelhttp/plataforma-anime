@@ -5,9 +5,9 @@ export function useTopAnimes() {
   return useQuery({
     queryKey: ["topAnimes"],
     queryFn: getPopularAnimes,
-    staleTime: 1000 * 60 * 60, // 1 hora
-    cacheTime: 1000 * 60 * 60, // 1 hora
-    retry: 1,
+    staleTime: 1000 * 60 * 5, // 1 hora
+    cacheTime: 1000 * 60 * 10, // 1 hora
+    retry: 2,
     refetchOnWindowFocus: false,
   });
 }

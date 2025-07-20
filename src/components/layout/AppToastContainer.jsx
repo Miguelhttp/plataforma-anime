@@ -1,9 +1,7 @@
 import { ToastContainer } from "react-toastify";
-import { useThemeStore } from "../../store/themeStore";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AppToastContainer() {
-  const theme = useThemeStore((state) => state.theme);
-
   return (
     <ToastContainer
       position="bottom-right"
@@ -15,7 +13,11 @@ export default function AppToastContainer() {
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme={theme}
+      theme="dark"
+      toastClassName={() =>
+        "bg-slate-800 text-white text-sm px-4 py-3 rounded-md shadow-md max-w-xs w-full mx-auto"
+      }
+      bodyClassName="flex items-center"
     />
   );
 }

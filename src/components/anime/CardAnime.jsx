@@ -24,10 +24,10 @@ function CardAnime({ anime, variant = "default" }) {
 
     if (favorito) {
       removeFavorite(anime.mal_id);
-      toast.success("Anime removido dos favoritos!");
+      toast.success("Anime removido dos favoritos! 🫢");
     } else {
       addFavorite(anime);
-      toast.success("Anime adicionado aos favoritos!");
+      toast.success("Anime adicionado aos favoritos! 🚀");
     }
   }, [addFavorite, removeFavorite, favorito, isSignedIn, anime]);
 
