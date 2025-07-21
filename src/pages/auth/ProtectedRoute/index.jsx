@@ -1,12 +1,8 @@
 import { useClerk, useUser } from "@clerk/clerk-react";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../../../components/common/LoadingSpinner";
+import { CharactersCardAnime } from "./_components/CharactersCardAnime";
 import styles from "./styles/aurora.module.css";
-
-// Imagens dos personagens 3D
-import kirito from "../../../assets/characters/kirito.webp";
-import obito from "../../../assets/characters/obito.webp";
-import sungJinwoo from "../../../assets/characters/sung-jinwoo.webp";
 
 export default function ProtectedRoute({ children }) {
   const { isLoaded, isSignedIn } = useUser();
@@ -24,43 +20,16 @@ export default function ProtectedRoute({ children }) {
     return (
       <>
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -40 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: "easeInOut" }}
           className="relative bg-gradient-to-br from-[#0D0D1C] to-[#15152B] flex flex-col items-center justify-center h-screen px-6 text-center text-white overflow-hidden"
         >
           {/* Aurora Background */}
           <div className={`${styles.aurora} absolute inset-0 z-0`} />
 
-          {/* Cards flutuantes dos personagens */}
-          <div className="flex gap-6 mb-10">
-            {[
-              { img: sungJinwoo, name: "Sung Jinwoo" },
-              { img: kirito, name: "Kirito" },
-              { img: obito, name: "Obito" },
-            ].map(({ img, name, desc }, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                whileHover={{ scale: 1.05, rotate: 0.5 }}
-                className="w-36 h-48 bg-gradient-to-tr from-purple-700/40 to-indigo-600/30 rounded-xl shadow-lg backdrop-blur-sm p-2 border border-purple-500/30"
-              >
-                <div className="group relative w-full h-full p-2 flex flex-col items-center justify-center">
-                  <img
-                    src={img}
-                    alt={name}
-                    className="object-contain w-full h-32 transition-transform duration-300 ease-out group-hover:scale-125"
-                  />
-                  <p className="text-sm text-center font-semibold mt-2 text-gray-300">
-                    {name}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <CharactersCardAnime />
 
           <motion.h1
             initial={{ scale: 0.8, opacity: 0 }}
