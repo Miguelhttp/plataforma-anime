@@ -17,8 +17,8 @@ jobs:
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'pnpm'
+          node-version: "18"
+          cache: "pnpm"
 
       - name: 📥 Instalar dependências
         run: pnpm install
@@ -28,3 +28,10 @@ jobs:
 
       - name: 🔨 Build da aplicação
         run: pnpm run build
+
+# O que esse workflow faz:
+#   Aciona quando:
+  #   Você faz um push ou pull request na main.
+#   Instala dependências com pnpm.
+#   Roda os testes com pnpm test.
+#   Faz o build da aplicação com pnpm run build.
