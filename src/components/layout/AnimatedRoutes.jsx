@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 export default function AnimatedRoutes() {
+  // Pegar a rota atual
   const locationKey = window.location.pathname;
 
   return (

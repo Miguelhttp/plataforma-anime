@@ -1,26 +1,19 @@
-import { useMemo } from "react";
+import { useMemo, lazy } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { motion } from "framer-motion";
-
 import "swiper/css";
 
-import { useSeasonalAnimes } from "../../hooks/useSeasonalAnimes";
-import CardAnime from "./CardAnime";
-import CardAnimeSkeleton from "./CardAnimeSkeleton";
+import { useCarrosselSeasonal } from "../logic/useCarrosselSeasonal";
+import CardAnimeSkeleton from "../CardAnimeSkeleton";
+
+const CardAnime = lazy(() => import("../CardAnime"));
 
 export function CarrosselSeasonal() {
-  const { data: animes, isLoading } = useSeasonalAnimes();
-
-  const animeUnique = useMemo(() => {
-    return animes?.filter(
-      (anime, index, self) =>
-        index === self.findIndex((a) => a.mal_id === anime.mal_id)
-    );
-  }, [animes]);
+  const { animes: animeUnique, isLoading } = useCarrosselSeasonal();
 
   const renderedAnimeSlides = useMemo(() => {
-    return animeUnique?.map((anime) => (
+    return (animeUnique ?? []).map((anime) => (
       <SwiperSlide
         key={anime.mal_id}
         className="!w-[180px] sm:!w-[160px] md:!w-[180px] !h-auto px-1 sm:px-2 md:px-3"
@@ -60,7 +53,7 @@ export function CarrosselSeasonal() {
                 <CardAnimeSkeleton />
               </SwiperSlide>
             ))
-          :  renderedAnimeSlides }
+          : renderedAnimeSlides}
       </Swiper>
     </motion.section>
   );

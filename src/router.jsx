@@ -12,7 +12,7 @@ import AnimeList from "./pages/AnimeList.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Favorites from "./pages/Favorites.jsx";
 import Genres from "./pages/Genres.jsx";
-import Home from "./pages/Home.jsx";
+import Home from "./pages/Home";
 import ProtectedUserProfile from "./pages/ProtectedUserProfile.jsx";
 
 //INFO: ROTA ROOT
