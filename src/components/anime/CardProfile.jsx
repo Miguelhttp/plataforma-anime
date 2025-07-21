@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 
-export default function CardProfile({ name = "Miguel Braga", message = "Bem-vindo ao AnimeHub!", sub = "O mundo dos animes na sua mão.", avatar }) {
+export default function CardProfile({
+  name = "Miguel Braga",
+  message = "Bem-vindo ao AnimeHub!",
+  sub = "O mundo dos animes na sua mão.",
+  avatar,
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

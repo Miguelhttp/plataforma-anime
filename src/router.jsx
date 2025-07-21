@@ -13,11 +13,18 @@ import ErrorPage from "./pages/ErrorPage";
 import Favorites from "./pages/Favorites";
 import Genres from "./pages/Genres";
 import Home from "./pages/Home";
-import ProtectedUserProfile from "./pages/ProtectedUserProfile.jsx";
+import ProtectedUserProfile from "./pages/ProtectedUserProfile";
+import ProtectedRoute from "./pages/auth/ProtectedRoute";
+import SignInPage from "./pages/auth/SignInPage/";
+import SignUpPage from "./pages/auth/SignUpPage";
 
 //INFO: ROTA ROOT
 const rootRoute = createRootRoute({
-  component: App,
+  component: () => (
+    <ProtectedRoute>
+      <App />
+    </ProtectedRoute>
+  ),
   errorComponent: ErrorPage,
 });
 
@@ -76,8 +83,26 @@ const genresRoute = createRoute({
 const userProfileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
-  component: ProtectedUserProfile,
+  component: () => (
+    <ProtectedRoute>
+      <ProtectedUserProfile />
+    </ProtectedRoute>
+  ),
   errorComponent: ErrorPage,
+});
+
+//INFO: ROTA DE SIGN IN
+const signInRoute = createRoute({
+  path: "/sign-in",
+  getParentRoute: () => rootRoute,
+  component: SignInPage,
+});
+
+//INFO: ROTA DE SIGN UP
+const signUpRoute = createRoute({
+  path: "/sign-up",
+  getParentRoute: () => rootRoute,
+  component: SignUpPage,
 });
 
 //INFO: ROUTE TREE (Arvore de rotas)
@@ -89,6 +114,8 @@ const routeTree = rootRoute.addChildren([
   aboutRoute,
   favoritesRoute,
   userProfileRoute, // Rota de perfil do usuário
+  signInRoute, // Rota de login
+  signUpRoute, // Rota de registro  
 ]);
 
 //INFO: CRIANDO O ROUTER

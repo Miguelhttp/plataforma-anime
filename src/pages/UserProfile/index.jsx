@@ -1,5 +1,5 @@
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import { useFavoritesStore } from "../store/favoritesStore";
+import { useFavoritesStore } from "../../store/favoritesStore";
 import { motion } from "framer-motion";
 
 export default function UserProfile() {

@@ -1,6 +1,6 @@
 import { SignedIn, SignedOut, useUser , SignInButton} from "@clerk/clerk-react";
-import UserProfile from "./UserProfile";
-import LoadingSpinner from "../components/common/LoadingSpinner";
+import UserProfile from "../UserProfile";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 export default function ProtectedUserProfile() {
   const { isLoaded, isSignedIn } = useUser();
