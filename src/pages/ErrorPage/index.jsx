@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import ImageError from "../assets/image-error.png";
+import ImageError from "../../assets/image-error.png";
 
 export default function ErrorPage() {
   return (

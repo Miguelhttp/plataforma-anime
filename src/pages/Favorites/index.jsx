@@ -1,6 +1,6 @@
-import CardAnime from "../components/anime/CardAnime";
-import WrapperPage from "../components/layout/WrapperPage";
-import { useFavoritesStore } from "../store/favoritesStore";
+import CardAnime from "../../components/anime/CardAnime";
+import WrapperPage from "../../components/layout/WrapperPage";
+import { useFavoritesStore } from "../../store/favoritesStore";
 import { useUser } from "@clerk/clerk-react";
 
 export default function Favorites() {

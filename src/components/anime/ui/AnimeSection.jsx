@@ -1,11 +1,14 @@
-import { useMemo } from "react";
+import { lazy, Suspense, useMemo } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import CardAnime from "./CardAnime";
-import CardAnimeSkeleton from "./CardAnimeSkeleton";
+
+import CardAnimeSkeleton from "../CardAnimeSkeleton";
+import { useAnimeSection } from "../logic/useAnimeSection";
 
 import "swiper/css";
 import "swiper/css/navigation";
+
+const CardAnime = lazy(() => import("../CardAnime"));
 
 export default function AnimeSection({
   title,
@@ -13,26 +16,27 @@ export default function AnimeSection({
   isLoading,
   horizontal = false,
 }) {
-  const animeUnique = useMemo(() => {
-    return animes?.filter(
-      (anime, index, self) =>
-        index === self.findIndex((a) => a.mal_id === anime.mal_id)
-    );
-  }, [animes]);
+  const { animeUnique } = useAnimeSection(animes);
 
+  //NOTE -> useMemo -> renderização de componentes
+  //NOTE -> A função useMemo é usada para armazenar o resultado de uma função que é computacionalmente cara.
   const renderedAnimesCards = useMemo(() => {
-    return animeUnique?.map((anime) => (
-      <CardAnime key={anime.mal_id} anime={anime} />
+    return animeUnique.map((anime) => (
+      <Suspense key={anime.mal_id} fallback={<CardAnimeSkeleton />}>
+        <CardAnime key={anime.mal_id} anime={anime} />
+      </Suspense>
     ));
   }, [animeUnique]);
 
   const renderedAnimeSlides = useMemo(() => {
-    return animeUnique?.map((anime) => (
+    return animeUnique.map((anime) => (
       <SwiperSlide
         key={anime.mal_id}
         className="!h-auto !w-[180px] sm:!w-[160px] md:!w-[180px] px-1 sm:px-2 md:px-3"
       >
-        <CardAnime anime={anime} variant="compact" />
+        <Suspense fallback={<CardAnimeSkeleton />}>
+          <CardAnime anime={anime} variant="compact" />
+        </Suspense>
       </SwiperSlide>
     ));
   }, [animeUnique]);
@@ -47,7 +51,7 @@ export default function AnimeSection({
         horizontal ? (
           <Swiper
             modules={[Navigation]}
-            spaceBetween={28}
+            spaceBetween={26}
             slidesPerView={"auto"}
             navigation
             className="!pb-4"

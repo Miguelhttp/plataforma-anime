@@ -1,4 +1,4 @@
-import AnimeSection from "../../components/anime/AnimeSection";
+import AnimeSection from "../../components/anime/ui/AnimeSection";
 import { CarrosselSeasonal } from "../../components/anime/ui/CarrosselSeasonal";
 
 import { HeroBanner } from "../../components/common/HeroBanner";
@@ -9,7 +9,7 @@ import { useHomeSections } from "./useHomeSections";
 export default function Home() {
   //NOTE - useHomeSections é um hook personalizado que retorna os dados das seções
   const { sectionsData, isLoading } = useHomeSections();
-  
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">

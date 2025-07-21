@@ -6,12 +6,12 @@ import {
 
 import App from "./App.jsx";
 
-import About from "./pages/About.jsx";
-import AnimeDetails from "./pages/AnimeDetails.jsx";
-import AnimeList from "./pages/AnimeList.jsx";
-import ErrorPage from "./pages/ErrorPage.jsx";
-import Favorites from "./pages/Favorites.jsx";
-import Genres from "./pages/Genres.jsx";
+import About from "./pages/About";
+import AnimeDetails from "./pages/AnimeDetails";
+import AnimeList from "./pages/AnimeList";
+import ErrorPage from "./pages/ErrorPage";
+import Favorites from "./pages/Favorites";
+import Genres from "./pages/Genres";
 import Home from "./pages/Home";
 import ProtectedUserProfile from "./pages/ProtectedUserProfile.jsx";
 

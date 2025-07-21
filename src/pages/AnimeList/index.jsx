@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { useSearch } from "@tanstack/react-router";
 import { AnimatePresence } from "framer-motion";
-import CardAnime from "../components/anime/CardAnime";
-import CardAnimeSkeleton from "../components/anime/CardAnimeSkeleton";
-import { useSearchAnimes } from "../hooks/useSearchAnimes";
+import CardAnime from "../../components/anime/CardAnime";
+import CardAnimeSkeleton from "../../components/anime/CardAnimeSkeleton";
+import { useSearchAnimes } from "../../hooks/useSearchAnimes";
 
 export default function AnimeList() {
   const { query } = useSearch({ from: "/anime" });

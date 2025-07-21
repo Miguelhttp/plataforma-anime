@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import CardProfile from "../components/anime/CardProfile";
-import imageProfile from "../assets/profile.png"
+import CardProfile from "../../components/anime/CardProfile";
+import imageProfile from "../../assets/profile.png"
 
 export default function About() {
   return (

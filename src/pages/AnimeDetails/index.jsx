@@ -1,11 +1,11 @@
 import { useParams } from "@tanstack/react-router";
-import LoadingSpinner from "../components/common/LoadingSpinner";
-import { useAnimeById } from "../hooks/useAnimeById";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
+import { useAnimeById } from "../../hooks/useAnimeById";
 
-import RelatedAnime from "../components/anime/RelatedAnime";
+import RelatedAnime from "../../components/anime/RelatedAnime";
 
 export default function AnimeDetails() {
-  const { id } = useParams({ from: "/anime/$id"});
+  const { id } = useParams({ from: "/anime/$id" });
   const { data: anime, isLoading, isError } = useAnimeById(id);
 
   if (isLoading) {
@@ -45,7 +45,9 @@ export default function AnimeDetails() {
         </div>
 
         <div className="flex flex-1 flex-col">
-          <h1 className="text-3xl text-gray-600 text-center font-bold mb-2">{anime.title}</h1>
+          <h1 className="text-3xl text-gray-600 text-center font-bold mb-2">
+            {anime.title}
+          </h1>
           <p className="text-gray-300 italic text-sm mb-4">
             {anime.title_japanese}
           </p>

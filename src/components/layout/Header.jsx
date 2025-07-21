@@ -58,7 +58,7 @@ export default function Header() {
 
         {/* Direita - Desktop (Navegação + Busca + Ações) */}
         <div className="hidden sm:flex items-center gap-6">
-          <nav className="flex gap-6 text-gray-300 text-base">
+          <nav className="flex gap-6 sm:px-2 text-gray-300 text-base">
             <Link
               to="/"
               className="hover:text-gray-500 dark:hover:text-white transition-colors"
