@@ -8,11 +8,19 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [22]
 
     steps:
       - name: 📦 Checkout do código
         uses: actions/checkout@v4
+
+      - name: ⚙️ Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: 🟢 Setup Node.js 22 com cache pnpm
         uses: actions/setup-node@v4
@@ -20,7 +28,9 @@ jobs:
           node-version: 22
           cache: pnpm
       - name: Ativar pnpm com corepack
-        run: corepack enable | corepack install
+        run: |
+          corepack enable  
+          corepack install
 
       - name: 📥 Instalar dependências
         run: pnpm install
