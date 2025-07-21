@@ -18,10 +18,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "pnpm"
-
+          cache: pnpm
       - name: Ativar pnpm com corepack
-        run: corepack prepare pnpm@latest --activate
+        run: corepack enable
 
       - name: 📥 Instalar dependências
         run: pnpm install
