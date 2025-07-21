@@ -6,7 +6,7 @@ import Header from "./components/layout/Header";
 
 export default function App() {
   return (
-    <div className="dark min-h-screen bg-gradient-to-b from-[#0D0D1C] to-[#15152B] text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#0D0D1C] to-[#15152B] text-white">
       <Header />
       <ErrorBoundary>
         <AnimatedRoutes />
