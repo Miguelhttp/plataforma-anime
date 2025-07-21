@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import bannerMobileImage from "../../assets/banner-mobile.png";
-import bannerImage from "../../assets/banner.png";
+import bannerMobileImage from "../../assets/banner-mobile.webp";
+import bannerImage from "../../assets/banner.webp";
 
 export function HeroBanner() {
   return (
@@ -9,6 +9,7 @@ export function HeroBanner() {
       <motion.img
         src={bannerImage}
         alt="Sung Jinwoo"
+        loading="lazy"
         className="hidden md:block absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"
         initial={{ scale: 1 }}
         animate={{ scale: [1, 1.05, 1] }}

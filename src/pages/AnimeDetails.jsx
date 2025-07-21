@@ -36,7 +36,7 @@ export default function AnimeDetails() {
       <div className="flex flex-col md:flex-row gap-8">
         <div className="shrink-0 w-full md:w-64 rounded-xl shadow-lg overflow-hidden bg-transparent">
           <img
-            src={anime.images.jpg.image_url}
+            src={anime.images.webp.image_url}
             alt={anime.title}
             className="md:w-full  h-full sm:object-contain mx-auto"
             loading="lazy"

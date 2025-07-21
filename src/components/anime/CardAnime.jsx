@@ -42,7 +42,7 @@ function CardAnime({ anime, variant = "default" }) {
         tabIndex={0}
       >
         <img
-          src={anime.images?.jpg?.image_url ?? "/fallback-anime.jpg"}
+          src={anime.images?.webp?.image_url ?? "/fallback-anime.jpg"}
           alt={anime.title}
           className="w-24 h-32 object-cover rounded-lg flex-shrink-0"
           loading="lazy"
@@ -112,7 +112,7 @@ function CardAnime({ anime, variant = "default" }) {
       className="bg-[#1a1a2e] rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-105 w-[200px] relative"
     >
       <img
-        src={anime.images?.jpg?.image_url ?? "/fallback-anime.jpg"}
+        src={anime.images?.webp?.image_url ?? "/fallback-anime.jpg"}
         alt={anime.title}
         o
         className="w-full h-64 object-cover mask-b-from-100 mask-b-to-50 rounded-t-xl transition-transform hover:scale-105"

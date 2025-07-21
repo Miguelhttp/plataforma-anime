@@ -1,21 +1,27 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import compression from "vite-plugin-compression";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    compression({ algorithm: "brotliCompress" }),
+  ],
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/test/setupTests.js',
+    environment: "jsdom",
+    setupFiles: "./src/test/setupTests.js",
     css: true,
     coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      provider: "v8",
+      reporter: ["text", "json", "html"],
     },
   },
   server: {
     open: true,
-  }
-})
+    host: true,
+  },
+});
