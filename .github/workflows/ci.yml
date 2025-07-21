@@ -20,7 +20,7 @@ jobs:
           node-version: 22
           cache: pnpm
       - name: Ativar pnpm com corepack
-        run: corepack enable
+        run: corepack enable | corepack install
 
       - name: 📥 Instalar dependências
         run: pnpm install
