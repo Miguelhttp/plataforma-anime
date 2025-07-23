@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import LoadingSpinner from "../../../components/common/LoadingSpinner";
 import { CharactersCardAnime } from "./_components/CharactersCardAnime";
 import styles from "./styles/aurora.module.css";
+import { Button } from "../../../components/ui/Button";
+
 
 export default function ProtectedRoute({ children }) {
   const { isLoaded, isSignedIn } = useUser();
@@ -57,12 +59,7 @@ export default function ProtectedRoute({ children }) {
             transition={{ delay: 0.9, duration: 0.5 }}
             className="flex gap-6"
           >
-            <button
-              onClick={() => redirectToSignIn()}
-              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded font-semibold transition"
-            >
-              Fazer login
-            </button>
+            <Button onClick={() => redirectToSignIn()} />
           </motion.div>
         </motion.div>
       </>

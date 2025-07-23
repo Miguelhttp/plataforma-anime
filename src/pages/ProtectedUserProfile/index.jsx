@@ -1,6 +1,7 @@
 import { SignInButton, SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import UserProfile from "../UserProfile";
+import { Button } from "../../components/ui/Button";
 
 export default function ProtectedUserProfile() {
   const { isLoaded } = useUser();
@@ -24,9 +25,7 @@ export default function ProtectedUserProfile() {
             Você precisa estar logado para acessar o perfil.
           </h2>
           <SignInButton mode="modal">
-            <button className="btn-primary px-6 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700 transition">
-              Fazer login
-            </button>
+            <Button />
           </SignInButton>
         </div>
       </SignedOut>

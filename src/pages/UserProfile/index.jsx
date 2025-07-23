@@ -1,6 +1,7 @@
 import { useUser, SignOutButton } from "@clerk/clerk-react";
 import { useFavoritesStore } from "../../store/favoritesStore";
 import { motion } from "framer-motion";
+import { Button } from "../../components/ui/Button";
 
 export default function UserProfile() {
   const { user } = useUser();
@@ -53,9 +54,7 @@ export default function UserProfile() {
       {/* Botão logout */}
       <div className="mt-12 flex justify-center">
         <SignOutButton>
-          <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-md transition">
-            Sair da Conta
-          </button>
+          <Button variant="logout" />
         </SignOutButton>
       </div>
     </motion.main>
