@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Heart, Star } from "lucide-react";
-import React, { useCallback } from "react";
+import React, { useCallback, useOptimistic, useTransition } from "react";
 import { toast } from "react-toastify";
 
 import { useUser } from "@clerk/clerk-react";
@@ -16,19 +16,31 @@ function CardAnime({ anime, variant = "default" }) {
   const malId = anime.mal_id;
   const favorito = isFavorite(malId);
 
+  const [optimisticFavorito, addOptimisticFavorito] = useOptimistic(
+    favorito,
+    (_, next) => next
+  );
+
+  const [isPending, startTransition] = useTransition();
+
   const toggleFavorite = useCallback(() => {
     if (!isSignedIn) {
       toast.info("Você precisa estar logado para favoritar animes.");
       return;
     }
 
-    if (favorito) {
-      removeFavorite(anime.mal_id);
-      toast.success("Anime removido dos favoritos! 🫢");
-    } else {
-      addFavorite(anime);
-      toast.success("Anime adicionado aos favoritos! 🚀");
-    }
+    const optimisticNextState = !favorito;
+    addOptimisticFavorito(optimisticNextState);
+
+    startTransition(() => {
+      if (favorito) {
+        removeFavorite(anime.mal_id);
+        toast.success("Anime removido dos favoritos! 🫢");
+      } else {
+        addFavorite(anime);
+        toast.success("Anime adicionado aos favoritos! 🚀");
+      }
+    });
   }, [addFavorite, removeFavorite, favorito, isSignedIn, anime]);
 
   if (variant === "list") {
@@ -52,15 +64,17 @@ function CardAnime({ anime, variant = "default" }) {
           type="button"
           onClick={toggleFavorite}
           aria-label={
-            favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"
+            optimisticFavorito
+              ? "Remover do favoritos"
+              : "Adicionar aos favoritos"
           }
           className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center text-white hover:text-pink-400 transition-colors duration-200"
         >
           <Heart
-            fill={favorito ? "currentColor" : "none"}
-            stroke="currentColor"
-            strokeWidth={1.5}
-            size={24}
+            fill={optimisticFavorito ? "currentColor" : "none"}
+            className={`w-5 h-5 ${
+              optimisticFavorito ? "text-pink-600" : "text-gray-300"
+            }`}
           />
         </button>
 
@@ -114,7 +128,6 @@ function CardAnime({ anime, variant = "default" }) {
       <img
         src={anime.images?.webp?.image_url ?? "/fallback-anime.jpg"}
         alt={anime.title}
-        o
         className="w-full h-64 object-cover mask-b-from-100 mask-b-to-50 rounded-t-xl transition-transform hover:scale-105"
         loading="lazy"
       />
@@ -123,12 +136,16 @@ function CardAnime({ anime, variant = "default" }) {
         type="button"
         onClick={toggleFavorite}
         aria-label={
-          favorito ? "Remover dos favoritos" : "Adicionar aos favoritos"
+          optimisticFavorito
+            ? "Remover do favoritos"
+            : "Adicionar aos favoritos"
         }
-        className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center text-white hover:text-pink-400 transition-colors duration-200"
+        className={`absolute top-4 left-4 w-8 h-8 flex items-center justify-center text-white transition-colors duration-200 ${
+          optimisticFavorito ? "text-pink-600" : "text-gray-300"
+        }`}
       >
         <Heart
-          fill={favorito ? "currentColor" : "none"}
+          fill={optimisticFavorito ? "currentColor" : "none"}
           stroke="currentColor"
           strokeWidth={1.5}
           size={24}
