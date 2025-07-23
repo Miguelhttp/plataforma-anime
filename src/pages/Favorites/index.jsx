@@ -2,10 +2,13 @@ import CardAnime from "../../components/anime/CardAnime";
 import WrapperPage from "../../components/layout/WrapperPage";
 import { useFavoritesStore } from "../../store/favoritesStore";
 import { useUser } from "@clerk/clerk-react";
+import { useMemo } from "react";
 
 export default function Favorites() {
   const { isSignedIn } = useUser();
   const favorites = useFavoritesStore((state) => state.favorites);
+
+  const favoritesMemo = useMemo(() => favorites, [favorites])
 
   if (!isSignedIn) {
     return (
@@ -24,7 +27,7 @@ export default function Favorites() {
 
   return (
     <WrapperPage>
-      {favorites.length === 0 ? (
+      {favoritesMemo.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-screen">
           <h1 className="text-lg md:text-3xl text-center font-bold text-white">
             Você ainda não tem animes favoritos
@@ -36,7 +39,7 @@ export default function Favorites() {
             Meus Animes Favoritos
           </h1>
           <div className="flex flex-col gap-6">
-            {favorites.map((anime) => (
+            {favoritesMemo.map((anime) => (
               <CardAnime key={anime.mal_id} anime={anime} variant="list" />
             ))}
           </div>

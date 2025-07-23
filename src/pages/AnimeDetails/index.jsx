@@ -10,20 +10,20 @@ export default function AnimeDetails() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center flex-col items-center h-60">
+      <section className="flex justify-center flex-col items-center h-60">
         <LoadingSpinner size={32} />
-        <p className="text-white animate-pulse">
+        <p className="text-white animate-pulse mt-2">
           Carregando detalhes do anime...
         </p>
-      </div>
+      </section>
     );
   }
 
   if (isError || !anime) {
     return (
-      <div className="flex justify-center items-center h-60">
+      <section className="flex justify-center items-center h-60">
         <p className="text-red-500">Erro ao carregar detalhes do anime.</p>
-      </div>
+      </section>
     );
   }
 
@@ -45,14 +45,14 @@ export default function AnimeDetails() {
         </div>
 
         <div className="flex flex-1 flex-col">
-          <h1 className="text-3xl text-gray-600 text-center font-bold mb-2">
+          <h1 className="text-3xl text-gray-100 text-center font-bold mb-2">
             {anime.title}
           </h1>
-          <p className="text-gray-300 italic text-sm mb-4">
+          <p className="text-gray-300 italic text-sm text-center mb-4">
             {anime.title_japanese}
           </p>
 
-          <div className="text-sm text-gray-400 space-y-1 mb-6">
+          <div className="text-sm text-gray-300 space-y-1 mb-6">
             <p>
               <strong>Status:</strong> {anime.status}
             </p>
@@ -73,7 +73,7 @@ export default function AnimeDetails() {
 
           {/* Sinopse com altura limitada e scroll se for longa */}
           <div
-            className="text-gray-600 font-semibold text-base leading-relaxed mb-4 max-h-48 overflow-y-auto pr-2"
+            className="text-gray-300 font-semibold text-base leading-relaxed mb-4 max-h-48 overflow-y-auto pr-2"
             style={{ scrollbarWidth: "thin" }}
           >
             {anime.synopsis || "Sinopse indisponível."}
@@ -84,7 +84,7 @@ export default function AnimeDetails() {
       {anime.trailer?.embed_url && (
         <div className="mt-12">
           <h2 className="text-2xl text-gray-600 font-semibold mb-2">Trailer</h2>
-          <div className="rounded-xl overflow-hidden shadow-lg h-full">
+          <div className="rounded-xl overflow-hidden shadow-lg">
             <iframe
               src={anime.trailer.embed_url}
               allowFullScreen

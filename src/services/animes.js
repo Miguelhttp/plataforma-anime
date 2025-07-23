@@ -8,9 +8,9 @@ const api = axios.create({
 
 export const getGenres = async () => {
   try {
-    const response = await api.get("/genres/anime");
-    console.log("Resposta da API:", response.data);
-    return response.data.data || []
+    const { data } = await api.get("/genres/anime");
+    console.log("Resposta da API:", data);
+    return data.data ?? [];
   } catch (error) {
     console.error("Erro ao buscar gêneros:", error);
     return [];
@@ -19,14 +19,19 @@ export const getGenres = async () => {
 
 // Busca os animes por gênero
 export const getAnimesByGenre = async (genreId, page = 1) => {
-  const response = await api.get("/anime", {
-    params: {
-      genres: genreId,
-      page,
-      limit: 24, // Limite de animes por gênero
-    },
-  });
-  return response.data.data || [];
+  try {
+    const { data } = await api.get("/anime", {
+      params: {
+        genres: genreId,
+        page,
+        limit: 24,
+      },
+    });
+    return data.data ?? [];
+  } catch (error) {
+    console.error("Erro ao buscar animes por gênero:", error);
+    return [];
+  }
 };
 
 // Input de busca de animes
@@ -34,29 +39,28 @@ export const searchAnimes = async (query) => {
   if (!query) return [];
 
   try {
-    const response = await api.get("/anime", {
+    const { data } = await api.get("/anime", {
       params: {
         q: query,
-        limit: 10, // Limite de resultados
+        limit: 10,
       },
     });
 
     const qLower = query.toLowerCase();
 
-    const filtered = response.data.data.filter((anime) => {
+    const filtered = (data.data ?? []).filter((anime) => {
       const titlesToCheck = [
         anime.title,
         anime.title_english,
         anime.title_japanese,
         ...(anime.title_synonyms || []),
       ]
-        .filter(Boolean) // remove nulls/undefined
+        .filter(Boolean)
         .map((t) => t.toLowerCase());
 
-      // Verifica se algum título alternativo contém a query
       return titlesToCheck.some((title) => title.includes(qLower));
     });
-  
+
     return filtered;
   } catch (error) {
     console.error("Erro ao buscar animes:", error);
@@ -66,26 +70,46 @@ export const searchAnimes = async (query) => {
 
 // Busca os animes da temporada atual
 export const getSeasonalAnimes = async () => {
-  const response = await api.get("/seasons/now");
-  return response.data.data;
+  try {
+    const { data } = await api.get("/seasons/now");
+    return data.data ?? [];
+  } catch (error) {
+    console.error("Erro ao buscar animes sazonais:", error);
+    return [];
+  }
 };
 
 // Busca os animes por ID (detalhes)
 export const getAnimeById = async (id) => {
-  const response = await api.get(`/anime/${id}`);
-  return response.data.data;
+  try {
+    const { data } = await api.get(`/anime/${id}`);
+    return data.data ?? null;
+  } catch (error) {
+    console.error(`Erro ao buscar anime com id ${id}:`, error);
+    return null;
+  }
 };
 
 // Busca os animes populares
 export const getPopularAnimes = async () => {
-  const response = await api.get("/top/anime");
-  return response.data.data;
+  try {
+    const { data } = await api.get("/top/anime");
+    return data.data ?? [];
+  } catch (error) {
+    console.error("Erro ao buscar animes populares:", error);
+    return [];
+  }
 };
 
 // Busca por recomendados
 export const getRecommendedAnimes = async () => {
-  const response = await api.get("/recommendations/anime");
-  return response.data.data
-    .map((item) => item.entry?.[0])
-    .filter((anime) => anime?.images?.jpg?.image_url); // pega apenas os animes recomendados
+  try {
+    const { data } = await api.get("/recommendations/anime");
+    return (data.data ?? [])
+      .map((item) => item.entry?.[0])
+      .filter((anime) => anime?.images?.jpg?.image_url);
+  } catch (error) {
+    console.error("Erro ao buscar animes recomendados:", error);
+    return [];
+  }
 };

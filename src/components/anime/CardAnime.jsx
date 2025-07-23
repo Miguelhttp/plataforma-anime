@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 import { useUser } from "@clerk/clerk-react";
 import { useFavoritesStore } from "../../store/favoritesStore";
+import { ArrowRightCircle } from "lucide-react";
 
 function CardAnime({ anime, variant = "default" }) {
   const addFavorite = useFavoritesStore((state) => state.addFavorite);
@@ -180,9 +181,10 @@ function CardAnime({ anime, variant = "default" }) {
 
         <Link
           to={`/anime/${anime.mal_id}`}
-          className="mt-4 bg-[#2e2e48] text-white text-base text-center py-2 rounded-md hover:bg-[#3e3e5c] transition-colors"
+          className="mt-4 bg-[#2e2e48] text-white text-base flex items-center justify-center text-center py-2 px-2 gap-2 rounded-md hover:bg-[#3e3e5c] transition-colors"
         >
           Ver detalhes
+          <ArrowRightCircle size={18} className="inline-block" />
         </Link>
       </div>
     </motion.div>
