@@ -83,11 +83,7 @@ const genresRoute = createRoute({
 const userProfileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
-  component: () => (
-    <ProtectedRoute>
-      <ProtectedUserProfile />
-    </ProtectedRoute>
-  ),
+  component: ProtectedUserProfile,
   errorComponent: ErrorPage,
 });
 

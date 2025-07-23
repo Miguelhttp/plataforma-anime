@@ -10,8 +10,11 @@ export default function ProtectedRoute({ children }) {
 
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <LoadingSpinner size={32} color />
+      <div className="flex flex-col items-center justify-center h-screen">
+        <LoadingSpinner size={36} />
+        <span className="text-gray-400 animate-pulse transition-colors duration-150 text-sm font-semibold mt-2">
+          Carregando...
+        </span>
       </div>
     );
   }
