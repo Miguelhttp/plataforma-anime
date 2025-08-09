@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "sync-ci": "powershell -ExecutionPolicy Bypass -File ./sync-ci-env.ps1"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.32.4",

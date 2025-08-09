@@ -1,6 +1,8 @@
 onlyBuiltDependencies:
   - '@biomejs/biome'
+  - '@clerk/shared'
   - '@parcel/watcher'
+  - '@tailwindcss/oxide'
   - esbuild
   - msw
   - puppeteer
