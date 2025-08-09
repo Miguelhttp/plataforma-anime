@@ -42,7 +42,7 @@ function CardAnime({ anime, variant = "default" }) {
         toast.success("Anime adicionado aos favoritos! 🚀");
       }
     });
-  }, [addFavorite, removeFavorite, favorito, isSignedIn, anime]);
+  }, [addFavorite, removeFavorite, favorito, isSignedIn, anime, addOptimisticFavorito]);
 
   if (variant === "list") {
     // Variante para lista vertical tipo notificação

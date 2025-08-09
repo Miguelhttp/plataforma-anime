@@ -6,8 +6,8 @@ import { useTopAnimes } from "../../hooks/useTopAnimes";
 export function useHomeSections() {
   const topAnimes = useTopAnimes();
   const recommendedAnimes = useRecommendedAnimes();
-  const adventureAnimes = useAnimesByGenre(2);
-  const mysteryAnimes = useAnimesByGenre(7);
+  const adventureAnimes = useAnimesByGenre(27);
+  const mysteryAnimes = useAnimesByGenre(23);
 
   //NOTE - sectionsData é um array de objetos que contém os dados das seções
   const sectionsData = [
@@ -27,7 +27,7 @@ export function useHomeSections() {
       isLoading: adventureAnimes.isLoading,
     },
     {
-      title: "Misterio",
+      title: "School Life",
       data: mysteryAnimes.data,
       isLoading: mysteryAnimes.isLoading,
     },
