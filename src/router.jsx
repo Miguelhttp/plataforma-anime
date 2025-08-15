@@ -3,27 +3,31 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router";
-
-import App from "./App.jsx";
-
-import About from "./pages/About";
-import AnimeDetails from "./pages/AnimeDetails";
-import AnimeList from "./pages/AnimeList";
+import { Suspense, lazy } from "react";
 import ErrorPage from "./pages/ErrorPage";
-import Favorites from "./pages/Favorites";
-import Genres from "./pages/Genres";
-import Home from "./pages/Home";
-import ProtectedUserProfile from "./pages/ProtectedUserProfile";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
-import SignInPage from "./pages/auth/SignInPage/";
-import SignUpPage from "./pages/auth/SignUpPage";
+
+const App = lazy(() => import("./App"));
+const Home = lazy(() => import("./pages/Home"));
+const AnimeList = lazy(() => import("./pages/AnimeList"));
+const AnimeDetails = lazy(() => import("./pages/AnimeDetails"));
+const About = lazy(() => import("./pages/About"));
+const Favorites = lazy(() => import("./pages/Favorites"));
+const Genres = lazy(() => import("./pages/Genres"));
+const ProtectedUserProfile = lazy(() => import("./pages/ProtectedUserProfile"));
+const SignInPage = lazy(() => import("./pages/auth/SignInPage"));
+const SignUpPage = lazy(() => import("./pages/auth/SignUpPage"));
+
+import LoadingSpinner from "./components/common/LoadingSpinner";
 
 //INFO: ROTA ROOT
 const rootRoute = createRootRoute({
   component: () => (
-    <ProtectedRoute>
-      <App />
-    </ProtectedRoute>
+    <Suspense fallback={<LoadingSpinner />}>
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    </Suspense>
   ),
   errorComponent: ErrorPage,
 });
@@ -33,7 +37,11 @@ const rootRoute = createRootRoute({
 const animesRoute = createRoute({
   path: "/anime",
   getParentRoute: () => rootRoute,
-  component: AnimeList,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <AnimeList />
+    </Suspense>
+  ),
   validateSearch: (search) => ({
     query: search.query ?? "",
   }),
@@ -43,7 +51,11 @@ const animesRoute = createRoute({
 const indexRoute = createRoute({
   path: "/",
   getParentRoute: () => rootRoute,
-  component: Home,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Home />
+    </Suspense>
+  ),
   errorComponent: ErrorPage,
 });
 
@@ -51,7 +63,11 @@ const indexRoute = createRoute({
 const animeDetailsRoute = createRoute({
   path: "/anime/$id",
   getParentRoute: () => rootRoute,
-  component: AnimeDetails,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <AnimeDetails />
+    </Suspense>
+  ),
   errorComponent: ErrorPage,
 });
 
@@ -59,7 +75,11 @@ const animeDetailsRoute = createRoute({
 const aboutRoute = createRoute({
   path: "/about",
   getParentRoute: () => rootRoute,
-  component: About,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <About />
+    </Suspense>
+  ),
   errorComponent: ErrorPage,
 });
 
@@ -67,7 +87,11 @@ const aboutRoute = createRoute({
 const favoritesRoute = createRoute({
   path: "/favorites",
   getParentRoute: () => rootRoute,
-  component: Favorites,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Favorites />
+    </Suspense>
+  ),
   errorComponent: ErrorPage,
 });
 
@@ -75,7 +99,11 @@ const favoritesRoute = createRoute({
 const genresRoute = createRoute({
   path: "/genres/$genreId",
   getParentRoute: () => rootRoute,
-  component: Genres,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Genres />
+    </Suspense>
+  ),
   errorComponent: ErrorPage,
 });
 
@@ -83,7 +111,11 @@ const genresRoute = createRoute({
 const userProfileRoute = createRoute({
   path: "/profile",
   getParentRoute: () => rootRoute,
-  component: ProtectedUserProfile,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <ProtectedUserProfile />
+    </Suspense>
+  ),
   errorComponent: ErrorPage,
 });
 
@@ -91,15 +123,24 @@ const userProfileRoute = createRoute({
 const signInRoute = createRoute({
   path: "/sign-in",
   getParentRoute: () => rootRoute,
-  component: SignInPage,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <SignInPage />
+    </Suspense>
+  ),
 });
 
 //INFO: ROTA DE SIGN UP
 const signUpRoute = createRoute({
   path: "/sign-up",
   getParentRoute: () => rootRoute,
-  component: SignUpPage,
+  component: () => (
+    <Suspense fallback={<LoadingSpinner />}>
+      <SignUpPage />
+    </Suspense>
+  ),
 });
+
 
 //INFO: ROUTE TREE (Arvore de rotas)
 const routeTree = rootRoute.addChildren([
@@ -111,7 +152,7 @@ const routeTree = rootRoute.addChildren([
   favoritesRoute,
   userProfileRoute, // Rota de perfil do usuário
   signInRoute, // Rota de login
-  signUpRoute, // Rota de registro  
+  signUpRoute, // Rota de registro
 ]);
 
 //INFO: CRIANDO O ROUTER

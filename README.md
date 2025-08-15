@@ -87,6 +87,4 @@ src/
 ├── App.jsx
 ├── main.jsx
 └── router.jsx
-
-```# Atualização
 ````
