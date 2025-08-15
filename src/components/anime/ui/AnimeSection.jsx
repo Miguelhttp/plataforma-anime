@@ -37,7 +37,7 @@ export default function AnimeSection({
         className="!h-auto !w-[180px] sm:!w-[160px] md:!w-[180px] px-1 sm:px-2 md:px-3"
       >
         <Suspense fallback={<CardAnimeSkeleton />}>
-          <CardAnime anime={anime} variant="compact" />
+          <CardAnime anime={anime} />
         </Suspense>
       </SwiperSlide>
     ));

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@media (prefers-reduced-motion: reduce)
 
 @theme {
   --font-family-sans: "Noto Sans JP", ui-sans-serif, system-ui, sans-serif;

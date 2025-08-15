@@ -1,21 +1,30 @@
 import { Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { Heart, Star } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRightCircle, Heart, Star } from "lucide-react";
 import React, { useCallback, useOptimistic, useTransition } from "react";
 import { toast } from "react-toastify";
 
 import { useUser } from "@clerk/clerk-react";
-import { ArrowRightCircle } from "lucide-react";
 import { useFavoritesStore } from "../../store/favoritesStore";
 
 function CardAnime({ anime, variant = "default" }) {
   const addFavorite = useFavoritesStore((state) => state.addFavorite);
   const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
-  const isFavorite = useFavoritesStore((state) => state.isFavorite);
-  const { isSignedIn } = useUser();
 
+  let isFavoriteFn = () => false;
+  try {
+    const storeIsFavorite = useFavoritesStore.getState()?.isFavorite;
+    if (typeof storeIsFavorite === "function") {
+      isFavoriteFn = storeIsFavorite;
+    }
+  } catch {
+    isFavoriteFn = () => false;
+  }
+
+  const { isSignedIn } = useUser();
+  const shouldReduceMotion = useReducedMotion(); // Usado para evitar animações desnecessárias
   const malId = anime.mal_id;
-  const favorito = isFavorite(malId);
+  const favorito = isFavoriteFn(malId);
 
   const [optimisticFavorito, addOptimisticFavorito] = useOptimistic(
     favorito,
@@ -26,39 +35,58 @@ function CardAnime({ anime, variant = "default" }) {
 
   const toggleFavorite = useCallback(() => {
     if (!isSignedIn) {
-      toast.info("Você precisa estar logado para favoritar animes.");
+      toast.info("Você precisa estar logado para favoritar animes.", {
+        toastId: "auth-error",
+      });
       return;
     }
 
-    const optimisticNextState = !favorito;
-    addOptimisticFavorito(optimisticNextState);
-
     startTransition(() => {
-      if (favorito) {
-        removeFavorite(anime.mal_id);
-        toast.success("Anime removido dos favoritos! 🫢");
+      const nextState = !optimisticFavorito;
+      addOptimisticFavorito(nextState);
+      if (nextState) {
+        addFavorite?.(anime);
+        toast.success("Anime adicionado aos favoritos! 🚀", {
+          toastId: `add-${anime.mal_id}`,
+        });
       } else {
-        addFavorite(anime);
-        toast.success("Anime adicionado aos favoritos! 🚀");
+        removeFavorite?.(anime.mal_id);
+        toast.success("Anime removido dos favoritos! 🫢", {
+          toastId: `remove-${anime.mal_id}`,
+        });
       }
     });
   }, [
     addFavorite,
     removeFavorite,
-    favorito,
     isSignedIn,
     anime,
+    optimisticFavorito,
     addOptimisticFavorito,
   ]);
+
+  const animationProps = shouldReduceMotion
+    ? { initial: {}, animate: {}, transition: {} }
+    : variant === "list"
+    ? {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.2 },
+      }
+    : {
+        initial: { opacity: 0, scale: 0.95 },
+        animate: { opacity: 1, scale: 1 },
+        transition: { duration: 0.2 },
+      };
 
   if (variant === "list") {
     // Variante para lista vertical tipo notificação
     return (
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.3 }}
-        className="dark:bg-[#1a1a2e] rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-[1.02] w-full max-w-xl mx-auto flex gap-4 p-4 items-center relative"
+        {...animationProps}
+        className={`dark:bg-[#1a1a2e] rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-[1.02] w-full max-w-xl mx-auto flex gap-4 p-4 items-center relative ${
+          variant === "list" ? "flex" : ""
+        }`}
         tabIndex={0}
       >
         <img
