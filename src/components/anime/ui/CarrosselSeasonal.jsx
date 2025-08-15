@@ -1,11 +1,11 @@
-import { useMemo, lazy } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import { motion } from "framer-motion";
+import { lazy, useMemo } from "react";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-import { useCarrosselSeasonal } from "../logic/useCarrosselSeasonal";
 import CardAnimeSkeleton from "../CardAnimeSkeleton";
+import { useCarrosselSeasonal } from "../logic/useCarrosselSeasonal";
 
 const CardAnime = lazy(() => import("../CardAnime"));
 

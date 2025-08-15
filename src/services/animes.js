@@ -15,7 +15,7 @@ export const getGenres = async () => {
     console.error("Erro ao buscar gêneros:", error);
     return [];
   }
-}
+};
 
 // Busca os animes por gênero
 export const getAnimesByGenre = async (genreId, page = 1) => {
@@ -71,10 +71,9 @@ export const searchAnimes = async (query) => {
 // Busca os animes da temporada atual
 export const getSeasonalAnimes = async () => {
   try {
-    const { data } = await api.get("/seasons/now");
+    const { data } = await api.get("/seasons/now", { timeout: 5000 });
     return data.data ?? [];
   } catch (error) {
-    console.error("Erro ao buscar animes sazonais:", error);
     return [];
   }
 };

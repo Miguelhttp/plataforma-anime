@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo } from "react";
+import { Suspense, lazy, useMemo } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -18,12 +18,14 @@ export default function AnimeSection({
 }) {
   const { animeUnique } = useAnimeSection(animes);
 
+  const skeletonCount = horizontal ? 6 : 10;
+
   //NOTE -> useMemo -> renderização de componentes
   //NOTE -> A função useMemo é usada para armazenar o resultado de uma função que é computacionalmente cara.
   const renderedAnimesCards = useMemo(() => {
     return animeUnique.map((anime) => (
       <Suspense key={anime.mal_id} fallback={<CardAnimeSkeleton />}>
-        <CardAnime key={anime.mal_id} anime={anime} />
+        <CardAnime anime={anime} />
       </Suspense>
     ));
   }, [animeUnique]);
@@ -56,7 +58,7 @@ export default function AnimeSection({
             navigation
             className="!pb-4"
           >
-            {[...Array(6)].map((_, index) => (
+            {Array.from({ length: skeletonCount }).map((_, index) => (
               <SwiperSlide key={index} className="!h-auto">
                 <CardAnimeSkeleton />
               </SwiperSlide>
@@ -64,7 +66,7 @@ export default function AnimeSection({
           </Swiper>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
-            {[...Array(10)].map((_, index) => (
+            {Array.from({ length: skeletonCount }).map((_, index) => (
               <CardAnimeSkeleton key={index} />
             ))}
           </div>
@@ -81,7 +83,14 @@ export default function AnimeSection({
         </Swiper>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5">
-          {renderedAnimesCards}
+          {renderedAnimesCards.map((card, i) => (
+            <div
+              key={i}
+              className="transition-opacity duration-500 ease-in-out opacity-0 animate-fadeIn"
+            >
+              {card}
+            </div>
+          ))}
         </div>
       )}
     </section>

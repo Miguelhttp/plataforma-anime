@@ -10,8 +10,10 @@ export const useSeasonalAnimes = () => {
   return useQuery({
     queryKey: ["seasonalAnimes"],
     queryFn: getSeasonalAnimes,
-    cacheTime: 1000 * 60 * 10, // 10 minutes
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    retry: 3,
+    cacheTime: 1000 * 60 * 5, // 5 minutes
+    retry: 1,
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
   });
 };

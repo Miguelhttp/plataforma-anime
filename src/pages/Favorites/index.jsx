@@ -34,7 +34,7 @@ export default function Favorites() {
           </h1>
         </div>
       ) : (
-        <div className="px-6 py-24 max-w-5xl mx-auto">
+        <div className="px-6 py-16 max-w-5xl mx-auto">
           <h1 className="bg-gradient-to-r from-indigo-500 to-cyan-600 bg-clip-text text-transparent text-center text-2xl font-bold px-2 sm:px-4 mb-4">
             Meus Animes Favoritos
           </h1>

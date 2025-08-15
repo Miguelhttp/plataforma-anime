@@ -5,9 +5,10 @@ export function useTopAnimes() {
   return useQuery({
     queryKey: ["topAnimes"],
     queryFn: getPopularAnimes,
-    staleTime: 1000 * 60 * 5, // 1 hora
-    cacheTime: 1000 * 60 * 10, // 1 hora
-    retry: 2,
+    cacheTime: 1000 * 60 * 5, // 5 minutes
+    retry: 1,
     refetchOnWindowFocus: false,
+    staleTime: 0,
+    refetchOnMount: true,
   });
 }

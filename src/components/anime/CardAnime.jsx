@@ -5,8 +5,8 @@ import React, { useCallback, useOptimistic, useTransition } from "react";
 import { toast } from "react-toastify";
 
 import { useUser } from "@clerk/clerk-react";
-import { useFavoritesStore } from "../../store/favoritesStore";
 import { ArrowRightCircle } from "lucide-react";
+import { useFavoritesStore } from "../../store/favoritesStore";
 
 function CardAnime({ anime, variant = "default" }) {
   const addFavorite = useFavoritesStore((state) => state.addFavorite);
@@ -42,7 +42,14 @@ function CardAnime({ anime, variant = "default" }) {
         toast.success("Anime adicionado aos favoritos! 🚀");
       }
     });
-  }, [addFavorite, removeFavorite, favorito, isSignedIn, anime, addOptimisticFavorito]);
+  }, [
+    addFavorite,
+    removeFavorite,
+    favorito,
+    isSignedIn,
+    anime,
+    addOptimisticFavorito,
+  ]);
 
   if (variant === "list") {
     // Variante para lista vertical tipo notificação

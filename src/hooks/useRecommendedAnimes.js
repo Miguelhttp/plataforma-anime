@@ -5,5 +5,8 @@ export const useRecommendedAnimes = () => {
   return useQuery({
     queryKey: ["recommendedAnimes"],
     queryFn: getRecommendedAnimes,
+    staleTime: 0,
+    refetchOnMount: true,
+    retry: 1,
   });
 };
