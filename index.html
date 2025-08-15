@@ -1,21 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
+    <!-- Meta tags básicas -->
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Plataforma AnimeHub</title>
+    <meta
+      name="description"
+      content="AnimeHub: Explore animes por gênero, ranking e temporada. Plataforma React moderna, responsiva e otimizada para UX e performance."
+    />
+    <link rel="canonical" href="https://seusite.com" />
+    <meta name="author" content="Miguel Braga" />
+    <meta name="theme-color" content="#1a1a1a" />
+
+    <!-- Open Graph / Social Share -->
+    <meta property="og:title" content="Plataforma AnimeHub" />
+    <meta
+      property="og:description"
+      content="Explore animes por gênero, ranking e temporada em uma plataforma moderna e responsiva."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/icone.svg" />
+    <meta property="og:url" content="https://seusite.com" />
+
+    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
-      as="font"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <!-- Outros -->
     <link rel="icon" type="image/svg+xml" href="/icone.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Vite + React" />
-    <title>Plataforma AnimeHub</title>
+    <link rel="manifest" href="/site.webmanifest" />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>
