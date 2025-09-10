@@ -1,0 +1,19 @@
+# Tipo do commit (feat, fix, docs, style, refactor, test, chore)
+# <tipo>: <descrição curta>
+
+# Exemplos:
+# feat: adiciona componente de busca avançada
+# fix: corrige erro no sistema de favoritos
+# docs: atualiza documentação da API
+# style: formata código com prettier
+# refactor: reestrutura componente CardAnime
+# test: adiciona testes para SearchInput
+# chore: atualiza dependências do projeto
+
+# Descrição mais detalhada (opcional):
+#
+# - Explique o que foi mudado
+# - Por que a mudança foi necessária
+# - Como ela resolve o problema
+#
+# Closes #123 (se resolve uma issue)
