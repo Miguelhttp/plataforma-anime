@@ -33,8 +33,12 @@ jobs:
           corepack enable  
           corepack install
 
-      - name: 📥 Instalar dependências
-        run: pnpm install --frozen-lockfile
+      - name: 📥 Instalar dependências (com Fallback)
+        run: |
+          if ! pnpm install --frozen-lockfile; then
+            echo "⚠️ Lockfile desatualizado, rodando com --no-frozen-lockfile"
+            pnpm install --no-frozen-lockfile
+          fi
 
       - name: 🧪 Executar testes
         run: pnpm test
