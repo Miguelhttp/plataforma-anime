@@ -1,15 +1,33 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Mock do useUser do Clerk
 vi.mock("@clerk/clerk-react", () => ({
-  useUser: vi.fn(() => ({ isSignedIn: false, user: null })),
+  useUser: vi.fn(),
 }));
 
 // Mock do favorites store
 vi.mock("../../store/favoritesStore", () => ({
   useFavoritesStore: vi.fn(),
+}));
+
+// Mock do react-toastify
+vi.mock("react-toastify", () => ({
+  toast: {
+    info: vi.fn(),
+    success: vi.fn(),
+  },
+}));
+
+// Mock do TanStack Router
+vi.mock("@tanstack/react-router", () => ({
+  Link: ({ to, children, ...props }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
+  ),
 }));
 
 // Importação DEPOIS dos mocks
@@ -42,6 +60,8 @@ describe("CardAnime", () => {
     type: "TV",
   };
 
+  let user;
+
   const renderCardAnime = (anime = mockAnime, variant = "default") => {
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false } },
@@ -56,27 +76,23 @@ describe("CardAnime", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    user = userEvent.setup();
 
     // Configure mocks
     mockUseUser.mockReturnValue({ isSignedIn: true });
-    mockIsFavorite.mockReturnValue(false);
 
     // Configure the favorites store mock
     mockUseFavoritesStore.mockImplementation((selector) => {
       const state = {
         addFavorite: mockAddFavorite,
         removeFavorite: mockRemoveFavorite,
-        isFavorite: mockIsFavorite,
       };
-
-      if (typeof selector === "function") {
-        return selector(state);
-      }
-
-      return {
-        getState: () => ({ isFavorite: mockIsFavorite }),
-      };
+      return selector(state);
     });
+    mockUseFavoritesStore.getState = vi.fn(() => ({
+      isFavorite: mockIsFavorite,
+    }));
+    mockIsFavorite.mockReturnValue(false); // Default para não favorito
   });
 
   describe("Renderização Básica", () => {
@@ -134,8 +150,10 @@ describe("CardAnime", () => {
       mockUseUser.mockReturnValue({ isSignedIn: true });
       renderCardAnime();
 
-      const favoriteButton = screen.getByLabelText("Adicionar aos favoritos");
-      fireEvent.click(favoriteButton);
+      const favoriteButton = screen.getByRole("button", {
+        name: "Adicionar aos favoritos",
+      });
+      await user.click(favoriteButton);
 
       await waitFor(() => {
         expect(mockAddFavorite).toHaveBeenCalledWith(mockAnime);
@@ -148,8 +166,10 @@ describe("CardAnime", () => {
 
       renderCardAnime();
 
-      const favoriteButton = screen.getByLabelText("Remover do favoritos");
-      fireEvent.click(favoriteButton);
+      const favoriteButton = screen.getByRole("button", {
+        name: "Remover do favoritos",
+      });
+      await user.click(favoriteButton);
 
       await waitFor(() => {
         expect(mockRemoveFavorite).toHaveBeenCalledWith(mockAnime.mal_id);
@@ -158,14 +178,15 @@ describe("CardAnime", () => {
 
     it("deve mostrar toast quando usuário não está logado", async () => {
       mockUseUser.mockReturnValue({ isSignedIn: false });
-
-      const { toast } = await import("react-toastify");
+      const { toast } = await import("react-toastify"); // Importa o mock
       const toastSpy = vi.spyOn(toast, "info");
 
       renderCardAnime();
 
-      const favoriteButton = screen.getByLabelText("Adicionar aos favoritos");
-      fireEvent.click(favoriteButton);
+      const favoriteButton = screen.getByRole("button", {
+        name: "Adicionar aos favoritos",
+      });
+      await user.click(favoriteButton);
 
       await waitFor(() => {
         expect(toastSpy).toHaveBeenCalledWith(
@@ -182,7 +203,9 @@ describe("CardAnime", () => {
       mockIsFavorite.mockReturnValue(true);
       renderCardAnime();
 
-      const favoriteButton = screen.getByLabelText("Remover do favoritos");
+      const favoriteButton = screen.getByRole("button", {
+        name: "Remover do favoritos",
+      });
       const heartIcon = favoriteButton.querySelector("svg");
 
       expect(heartIcon).toHaveClass("text-pink-600");
@@ -192,7 +215,9 @@ describe("CardAnime", () => {
       mockIsFavorite.mockReturnValue(false);
       renderCardAnime();
 
-      const favoriteButton = screen.getByLabelText("Adicionar aos favoritos");
+      const favoriteButton = screen.getByRole("button", {
+        name: "Adicionar aos favoritos",
+      });
       const heartIcon = favoriteButton.querySelector("svg");
 
       expect(heartIcon).toHaveClass("text-gray-300");
@@ -203,7 +228,9 @@ describe("CardAnime", () => {
     it("deve ter link para página de detalhes", () => {
       renderCardAnime();
 
-      const detailsLink = screen.getByTestId("router-link");
+      const detailsLink = screen.getAllByRole("link", {
+        name: /ver detalhes/i,
+      })[0];
       expect(detailsLink).toHaveAttribute("href", "/anime/1");
     });
   });
