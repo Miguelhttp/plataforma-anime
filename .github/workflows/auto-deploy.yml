@@ -1,0 +1,55 @@
+name: 🧪 CI Pipeline - AnimeHub
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        node-version: [22]
+
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 🟢 Setup Node.js ${{ matrix.node-version }} com cache pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Ativar pnpm com corepack
+        run: |
+          corepack enable  
+          corepack install
+
+      - name: 📥 Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: 🧪 Executar testes
+        run: pnpm test
+
+      - name: 📊 Cobertura de testes
+        run: pnpm test:coverage
+
+      - name: 🏗️ Build da aplicação
+        run: pnpm build
+
+      - name: 🔍 Análise de qualidade
+        run: |
+          echo "📊 Build artifacts gerados com sucesso"
+          ls -la dist/
+
+      - name: 🎉 Pipeline concluído
+        if: success()
+        run: echo "✅ Pipeline de CI executado com sucesso!"
