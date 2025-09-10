@@ -1,11 +1,39 @@
-import '@testing-library/jest-dom';
-import { server } from './server';
+import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
-// Inicia o MSW antes de todos os testes
-beforeAll(() => server.listen());
+// Mock do Clerk
+vi.mock("@clerk/clerk-react", () => ({
+  useUser: vi.fn(() => ({ isSignedIn: false, user: null })),
+  ClerkProvider: ({ children }) => children,
+  SignIn: () => "Sign In Component",
+  SignUp: () => "Sign Up Component",
+}));
 
-// Reseta os handlers entre testes (caso tenha override)
-afterEach(() => server.resetHandlers());
+// Mock do TanStack Router
+vi.mock("@tanstack/react-router", () => ({
+  Link: ({ children, to, ...props }) => children,
+  useNavigate: () => vi.fn(),
+  useParams: () => ({}),
+}));
 
-// Encerra o MSW após todos os testes
-afterAll(() => server.close());
+// Mock do Framer Motion para evitar problemas de animação
+vi.mock("framer-motion", () => ({
+  motion: {
+    div: ({ children, ...props }) => children,
+    img: ({ children, ...props }) => children,
+  },
+  AnimatePresence: ({ children }) => children,
+  useReducedMotion: () => false,
+}));
+
+// Mock do react-toastify
+vi.mock("react-toastify", () => ({
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+  },
+}));
+
+// Variables de ambiente para testes
+process.env.VITE_API_URL = "https://api.jikan.moe/v4";
